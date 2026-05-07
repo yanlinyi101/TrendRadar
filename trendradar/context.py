@@ -1241,6 +1241,42 @@ class AppContext:
             hotlist_stats.sort(key=lambda x: (-x["count"], x.get("position", 9999), x["word"]))
             rss_stats.sort(key=lambda x: (-x["count"], x.get("position", 9999), x["word"]))
 
+        # 高分精选 Top-N：跨标签全局排序，插到 RSS 区最前面（如果有 RSS）；
+        # 否则插到热榜区最前面。供推送/HTML 报告共用。
+        ts_cfg = self.config.get("TOP_SCORE_SECTION", {}) or {}
+        if ts_cfg.get("ENABLED", False):
+            top_n = int(ts_cfg.get("COUNT", 20))
+            top_word = str(ts_cfg.get("WORD", "🔥 今日精选 Top 20"))
+            top_position = int(ts_cfg.get("POSITION", 0))
+
+            # 收集所有入选条目（同一 URL 仅保留 final_score 更高的那条，避免重复）
+            seen_urls = set()
+            all_titles: List[Dict] = []
+            for stat in hotlist_stats + rss_stats:
+                for t in stat.get("titles", []):
+                    url_key = t.get("url") or t.get("mobile_url") or t.get("title", "")
+                    if url_key in seen_urls:
+                        continue
+                    seen_urls.add(url_key)
+                    all_titles.append(t)
+
+            all_titles.sort(key=lambda t: -t.get("final_score", 0))
+            top_titles = all_titles[:top_n]
+
+            if top_titles:
+                top_group = {
+                    "word": top_word,
+                    "count": len(top_titles),
+                    "position": top_position,
+                    "titles": top_titles,
+                }
+                # 优先放进 RSS 区（数据更丰富）；若 RSS 为空则进热榜区
+                if rss_stats:
+                    rss_stats.insert(0, top_group)
+                else:
+                    hotlist_stats.insert(0, top_group)
+                print(f"[AI筛选] 高分精选：从 {len(all_titles)} 条候选中选出 Top {len(top_titles)} 条")
+
         return hotlist_stats, rss_stats
 
     # === 资源清理 ===

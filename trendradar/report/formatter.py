@@ -10,6 +10,51 @@ from typing import Dict
 from trendradar.report.helpers import clean_title, html_escape, format_rank_display
 
 
+def _build_score_badge(platform: str, title_data: Dict) -> str:
+    """构造 final_score 徽标（行尾追加），仅当 title_data 含 final_score 时返回内容
+
+    Phase 1+2+4 把 tier × decay × ai_relevance 算成 final_score 写入 title_data。
+    展示时让分数显示在标题行末，方便用户一眼判断这条新闻的综合"含金量"。
+
+    样式（按平台特性）：
+      [T1 0.85]  ← 高分（≥0.7）红色 / [T1 0.62] ← 中等（0.5-0.7）橙色 / [T2 0.42] ← 低分灰色
+
+    没有 final_score 字段 → 返回空串（向后兼容，旧调用不受影响）
+    """
+    if "final_score" not in title_data:
+        return ""
+
+    try:
+        score = float(title_data.get("final_score") or 0.0)
+    except (ValueError, TypeError):
+        return ""
+
+    tier = str(title_data.get("tier") or "").strip()
+    label = f"{tier} {score:.2f}" if tier else f"{score:.2f}"
+
+    if platform == "feishu":
+        if score >= 0.7:
+            color = "red"
+        elif score >= 0.5:
+            color = "orange"
+        else:
+            color = "grey"
+        return f" <font color='{color}'>📊 {label}</font>"
+
+    if platform == "html":
+        css_class = "score-high" if score >= 0.7 else "score-mid" if score >= 0.5 else "score-low"
+        return f" <span class='score-badge {css_class}'>📊 {label}</span>"
+
+    if platform == "telegram":
+        return f" <code>📊 {label}</code>"
+
+    if platform == "slack":
+        return f" `📊 {label}`"
+
+    # dingtalk / wework / bark / ntfy / fallback
+    return f" `📊 {label}`"
+
+
 def format_title_for_platform(
     platform: str, title_data: Dict, show_source: bool = True, show_keyword: bool = False
 ) -> str:
@@ -76,6 +121,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" <font color='green'>({title_data['count']}次)</font>"
 
+        result += _build_score_badge("feishu", title_data)
         return result
 
     elif platform == "dingtalk":
@@ -100,6 +146,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" ({title_data['count']}次)"
 
+        result += _build_score_badge("dingtalk", title_data)
         return result
 
     elif platform in ("wework", "bark"):
@@ -125,6 +172,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" ({title_data['count']}次)"
 
+        result += _build_score_badge(platform, title_data)
         return result
 
     elif platform == "telegram":
@@ -149,6 +197,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" <code>({title_data['count']}次)</code>"
 
+        result += _build_score_badge("telegram", title_data)
         return result
 
     elif platform == "ntfy":
@@ -173,6 +222,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" `({title_data['count']}次)`"
 
+        result += _build_score_badge("ntfy", title_data)
         return result
 
     elif platform == "slack":
@@ -203,6 +253,7 @@ def format_title_for_platform(
         if title_data["count"] > 1:
             result += f" `({title_data['count']}次)`"
 
+        result += _build_score_badge("slack", title_data)
         return result
 
     elif platform == "html":
@@ -237,6 +288,8 @@ def format_title_for_platform(
             formatted_title += f" <font color='grey'>- {escaped_time}</font>"
         if title_data["count"] > 1:
             formatted_title += f" <font color='green'>({title_data['count']}次)</font>"
+
+        formatted_title += _build_score_badge("html", title_data)
 
         if title_data.get("is_new"):
             formatted_title = f"<div class='new-title'>🆕 {formatted_title}</div>"

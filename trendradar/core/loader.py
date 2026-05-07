@@ -467,6 +467,26 @@ def _load_event_clustering_config(config_data: Dict) -> Dict:
     }
 
 
+def _load_top_score_section_config(config_data: Dict) -> Dict:
+    """加载高分精选区配置（Phase 1 配套：跨标签 Top-N）"""
+    ts = config_data.get("top_score_section", {}) or {}
+    try:
+        count = int(ts.get("count", 20))
+        count = max(1, min(200, count))
+    except (ValueError, TypeError):
+        count = 20
+    try:
+        position = int(ts.get("position", 0))
+    except (ValueError, TypeError):
+        position = 0
+    return {
+        "ENABLED": bool(ts.get("enabled", False)),
+        "COUNT": count,
+        "WORD": str(ts.get("word", "🔥 今日精选 Top 20")),
+        "POSITION": position,
+    }
+
+
 def _load_filter_config(config_data: Dict) -> Dict:
     """加载筛选策略配置"""
     filter_cfg = config_data.get("filter", {})
@@ -732,6 +752,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     # 事件聚类配置（Phase 3）
     config["EVENT_CLUSTERING"] = _load_event_clustering_config(config_data)
+
+    # 高分精选 Top-N 区
+    config["TOP_SCORE_SECTION"] = _load_top_score_section_config(config_data)
 
     # 筛选策略配置
     config["FILTER"] = _load_filter_config(config_data)
