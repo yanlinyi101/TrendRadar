@@ -1006,6 +1006,12 @@ class AppContext:
         # Phase 2: 时效衰减
         decay_enabled = bool(self.freshness_decay_config.get("ENABLED", False))
 
+        # Phase 3: 事件聚类
+        ec_cfg = self.config.get("EVENT_CLUSTERING", {}) or {}
+        clustering_enabled = bool(ec_cfg.get("ENABLED", False))
+        cluster_threshold = int(ec_cfg.get("SIMILARITY_THRESHOLD", 16))
+        cluster_total_folded = 0  # 全局统计
+
         # 统计 tier 命中（用于落地后日志）
         tier_kept_counter: Dict[str, int] = {}
         tier_filtered_counter: Dict[str, int] = {}
@@ -1162,6 +1168,19 @@ class AppContext:
                 hotlist_titles.sort(key=lambda x: -x.get("final_score", 0))
                 rss_titles.sort(key=lambda x: -x.get("final_score", 0))
 
+            # Phase 3: 事件聚类（在排序后、max_news 截断前应用）
+            # 简化方案：仅在 RSS 区聚类——热榜本身已按平台去重，且热榜与 RSS
+            # 的"同事件"语义不同（热榜是同时段同新闻，RSS 是跨号转发）
+            if clustering_enabled and rss_titles:
+                from trendradar.utils.dedup import cluster_by_simhash
+
+                before = len(rss_titles)
+                rss_titles = cluster_by_simhash(
+                    rss_titles, threshold=cluster_threshold
+                )
+                folded = before - len(rss_titles)
+                cluster_total_folded += folded
+
             if hotlist_titles:
                 if max_news > 0:
                     hotlist_titles = hotlist_titles[:max_news]
@@ -1200,6 +1219,8 @@ class AppContext:
             )
             thresholds = ", ".join(f"{t}≥{per_tier_min.get(t, 0)}" for t in ("T1", "T1.5", "T2"))
             print(f"[AI筛选] 信源分级过滤：保留 {total_kept} 条 ({', '.join(parts)})；tier 命中 {tier_breakdown}；阈值 [{thresholds}]")
+        if clustering_enabled and cluster_total_folded > 0:
+            print(f"[AI筛选] 事件聚类：折叠 {cluster_total_folded} 条同事件转发（threshold={cluster_threshold}）")
         elif min_score > 0:
             hotlist_kept = sum(s["count"] for s in hotlist_stats)
             rss_kept = sum(s["count"] for s in rss_stats)

@@ -439,6 +439,23 @@ def _load_freshness_decay_config(config_data: Dict) -> Dict:
     }
 
 
+def _load_event_clustering_config(config_data: Dict) -> Dict:
+    """加载事件聚类配置（Phase 3: SimHash 去重）"""
+    ec = config_data.get("event_clustering", {}) or {}
+
+    try:
+        threshold = int(ec.get("similarity_threshold", 16))
+        threshold = max(0, min(64, threshold))
+    except (ValueError, TypeError):
+        threshold = 16
+
+    return {
+        "ENABLED": bool(ec.get("enabled", False)),
+        "SIMILARITY_THRESHOLD": threshold,
+        "SHOW_CLUSTER_COUNT": bool(ec.get("show_cluster_count", True)),
+    }
+
+
 def _load_filter_config(config_data: Dict) -> Dict:
     """加载筛选策略配置"""
     filter_cfg = config_data.get("filter", {})
@@ -701,6 +718,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     # 时效衰减配置（Phase 2）
     config["FRESHNESS_DECAY"] = _load_freshness_decay_config(config_data)
+
+    # 事件聚类配置（Phase 3）
+    config["EVENT_CLUSTERING"] = _load_event_clustering_config(config_data)
 
     # 筛选策略配置
     config["FILTER"] = _load_filter_config(config_data)
