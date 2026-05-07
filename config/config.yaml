@@ -562,6 +562,30 @@ source_tier:
       - dario-amodei  # Dario Amodei (Anthropic CEO)
       - logan-kilpatrick  # Google DeepMind DevRel
 
+
+# ===============================================================
+# 4.8 时效衰减（Phase 2: 让旧内容自动让位）
+#
+# 公式： freshness_decay = 0.5 ^ (age_hours / half_life_hours)
+#   即每过 half_life_hours 小时，分数乘 0.5
+#
+# 集成到最终分数：
+#   final_score = relevance_score × tier_weight × freshness_decay
+#
+# 这样昨天的 0.85 分和今早的 0.62 分自然区分开，
+# 避免日报里一直挂着隔夜内容。
+#
+# 关掉本机制：把 enabled 改成 false
+# ===============================================================
+freshness_decay:
+  enabled: true
+  half_life_hours: 24       # 半衰期：每过 24h 分数折半
+  # 解析不到时间戳时的衰减系数：
+  #   1.0 = 视为新鲜不衰减；0.5 = 当作 1 个半衰期前；0 = 直接踢出
+  missing_time_decay: 1.0
+  # 衰减下限（避免极旧内容分数为 0 完全消失）
+  min_decay: 0.05
+
   # 标签提取提示词模板（首次运行时使用）
   extract_prompt_file: "extract_prompt.txt"
 

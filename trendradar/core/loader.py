@@ -399,6 +399,46 @@ def _load_source_tier_config(config_data: Dict) -> Dict:
     }
 
 
+def _load_freshness_decay_config(config_data: Dict) -> Dict:
+    """加载时效衰减配置（Phase 2: 半衰期）
+
+    返回结构：
+        {
+            "ENABLED": bool,
+            "HALF_LIFE_HOURS": float,
+            "MISSING_TIME_DECAY": float,  # 解析不到时间戳时的衰减系数
+            "MIN_DECAY": float,           # 衰减下限
+        }
+    """
+    fd = config_data.get("freshness_decay", {}) or {}
+
+    try:
+        half_life = float(fd.get("half_life_hours", 24))
+        if half_life <= 0:
+            half_life = 24.0
+    except (ValueError, TypeError):
+        half_life = 24.0
+
+    try:
+        missing = float(fd.get("missing_time_decay", 1.0))
+        missing = max(0.0, min(1.0, missing))
+    except (ValueError, TypeError):
+        missing = 1.0
+
+    try:
+        min_decay = float(fd.get("min_decay", 0.05))
+        min_decay = max(0.0, min(1.0, min_decay))
+    except (ValueError, TypeError):
+        min_decay = 0.05
+
+    return {
+        "ENABLED": bool(fd.get("enabled", False)),
+        "HALF_LIFE_HOURS": half_life,
+        "MISSING_TIME_DECAY": missing,
+        "MIN_DECAY": min_decay,
+    }
+
+
 def _load_filter_config(config_data: Dict) -> Dict:
     """加载筛选策略配置"""
     filter_cfg = config_data.get("filter", {})
@@ -658,6 +698,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     # 信源分级配置（Phase 1）
     config["SOURCE_TIER"] = _load_source_tier_config(config_data)
+
+    # 时效衰减配置（Phase 2）
+    config["FRESHNESS_DECAY"] = _load_freshness_decay_config(config_data)
 
     # 筛选策略配置
     config["FILTER"] = _load_filter_config(config_data)

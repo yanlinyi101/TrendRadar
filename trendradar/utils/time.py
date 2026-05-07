@@ -285,3 +285,44 @@ def calculate_days_old(iso_time: str, timezone: str = DEFAULT_TIMEZONE) -> Optio
     except Exception:
         return None
 
+
+def calculate_hours_old(time_str: str, timezone: str = DEFAULT_TIMEZONE) -> Optional[float]:
+    """
+    计算给定时间到现在的小时数（用于 freshness 衰减）
+
+    支持两种输入格式：
+    - ISO 格式（带或不带时区）：例 '2026-05-07T08:00:00+08:00'，RSS 文章用
+    - HH-MM 格式：例 '15-30'，热榜条目用，默认按"配置时区当天"解析；
+      若解析出的时刻超过当前时间（暗示是昨天），自动减一天
+
+    无法解析则返回 None，调用方应跳过衰减（视为新鲜）。
+    """
+    if not time_str:
+        return None
+
+    # 路径 A：ISO 格式 — 复用 calculate_days_old
+    if "T" in time_str or "+" in time_str or time_str.endswith("Z") or len(time_str) > 10:
+        days = calculate_days_old(time_str, timezone)
+        if days is None:
+            return None
+        return days * 24.0
+
+    # 路径 B：HH-MM 格式（热榜专用）
+    if len(time_str) == 5 and "-" in time_str:
+        try:
+            hh_str, mm_str = time_str.split("-", 1)
+            hh, mm = int(hh_str), int(mm_str)
+            if not (0 <= hh < 24 and 0 <= mm < 60):
+                return None
+            now = get_configured_time(timezone)
+            same_day = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+            diff_seconds = (now - same_day).total_seconds()
+            # 解析为未来时间 → 实际是前一天
+            if diff_seconds < 0:
+                diff_seconds += 24 * 3600
+            return diff_seconds / 3600.0
+        except (ValueError, TypeError):
+            return None
+
+    return None
+

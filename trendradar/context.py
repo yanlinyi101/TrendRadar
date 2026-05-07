@@ -133,6 +133,40 @@ class AppContext:
         return mapping.get(source_id, default)
 
     @property
+    def freshness_decay_config(self) -> Dict:
+        """获取时效衰减配置（Phase 2）"""
+        return self.config.get("FRESHNESS_DECAY", {}) or {}
+
+    def compute_freshness_decay(self, time_str: str) -> float:
+        """
+        计算时效衰减系数：0.5 ^ (age_hours / half_life_hours)
+
+        - 缺失/无法解析时间戳 → 返回 missing_time_decay
+        - 半衰期未启用 → 返回 1.0（不衰减）
+        - 永远不会低于 min_decay
+        """
+        cfg = self.freshness_decay_config
+        if not cfg.get("ENABLED", False):
+            return 1.0
+
+        from trendradar.utils.time import calculate_hours_old
+
+        timezone = self.config.get("TIMEZONE", DEFAULT_TIMEZONE)
+        age_hours = calculate_hours_old(time_str, timezone)
+
+        if age_hours is None:
+            return float(cfg.get("MISSING_TIME_DECAY", 1.0))
+
+        # 未来时间戳（如时钟同步问题）当作 0 小时处理
+        if age_hours < 0:
+            age_hours = 0.0
+
+        half_life = float(cfg.get("HALF_LIFE_HOURS", 24.0))
+        decay = 0.5 ** (age_hours / half_life)
+        min_decay = float(cfg.get("MIN_DECAY", 0.05))
+        return max(min_decay, decay)
+
+    @property
     def display_mode(self) -> str:
         """获取显示模式 (keyword | platform)"""
         return self.config.get("DISPLAY_MODE", "keyword")
@@ -969,6 +1003,9 @@ class AppContext:
         per_tier_min = tier_cfg.get("PER_TIER_MIN_SCORE", {}) or {}
         default_tier = tier_cfg.get("DEFAULT_TIER", "T2") or "T2"
 
+        # Phase 2: 时效衰减
+        decay_enabled = bool(self.freshness_decay_config.get("ENABLED", False))
+
         # 统计 tier 命中（用于落地后日志）
         tier_kept_counter: Dict[str, int] = {}
         tier_filtered_counter: Dict[str, int] = {}
@@ -1038,7 +1075,16 @@ class AppContext:
                         continue
                     item_tier = default_tier
                     weight = 1.0
-                final_score = score * weight
+
+                # Phase 2: 时效衰减
+                # 优先用 first_time（最早出现时间，更代表"事件年龄"）；否则退回 last_time
+                if decay_enabled:
+                    age_basis = item.get("first_time") or item.get("last_time") or ""
+                    decay = self.compute_freshness_decay(age_basis)
+                else:
+                    decay = 1.0
+
+                final_score = score * weight * decay
 
                 # 构建时间显示
                 first_time = item.get("first_time", "")
@@ -1098,9 +1144,10 @@ class AppContext:
                     "is_new": is_new,
                     "time_display": time_display,
                     "matched_keyword": tag_name,
-                    # Phase 1: 信源分级元数据（仅写入，渲染层按需消费）
+                    # Phase 1+2: 信源分级 + 时效衰减元数据（仅写入，渲染层按需消费）
                     "tier": item_tier,
                     "relevance_score": score,
+                    "freshness_decay": decay,
                     "final_score": final_score,
                 }
 
@@ -1109,9 +1156,9 @@ class AppContext:
                 else:
                     hotlist_titles.append(title_entry)
 
-            # Phase 1: 启用分级时，标签内按 final_score 降序重排
+            # Phase 1/2: 启用分级或时效衰减时，标签内按 final_score 降序重排
             # 否则保留来自存储层的原顺序（仍为 relevance_score DESC）
-            if tier_enabled:
+            if tier_enabled or decay_enabled:
                 hotlist_titles.sort(key=lambda x: -x.get("final_score", 0))
                 rss_titles.sort(key=lambda x: -x.get("final_score", 0))
 
