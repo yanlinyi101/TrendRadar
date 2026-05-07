@@ -1630,7 +1630,7 @@ class SQLiteStorageMixin:
                     placeholders = ",".join("?" * len(rss_ids))
                     rss_cursor.execute(f"""
                         SELECT i.id, i.title, i.feed_id, f.name as feed_name,
-                               i.url, i.published_at
+                               i.url, i.published_at, i.first_crawl_time
                         FROM rss_items i
                         LEFT JOIN rss_feeds f ON i.feed_id = f.id
                         WHERE i.id IN ({placeholders})
@@ -1642,6 +1642,10 @@ class SQLiteStorageMixin:
                         rss_id = fr_row[0]
                         info = rss_info.get(rss_id)
                         if info:
+                            # published_at 缺失时 fallback 到 first_crawl_time，
+                            # 保证 HTML 时间轴有时间可显示
+                            _published = info[5] or ""
+                            _crawl_time = info[6] or ""
                             results.append({
                                 "news_item_id": rss_id,
                                 "source_type": "rss",
@@ -1657,8 +1661,8 @@ class SQLiteStorageMixin:
                                 "mobile_url": "",
                                 "rank": 0,
                                 "ranks": [],
-                                "first_time": info[5] or "",
-                                "last_time": info[5] or "",
+                                "first_time": _published or _crawl_time,
+                                "last_time": _published or _crawl_time,
                                 "count": 1,
                             })
             except Exception:
