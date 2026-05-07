@@ -48,9 +48,13 @@ def render_html_content(
         渲染后的 HTML 字符串
     """
     # 默认区域顺序
-    default_region_order = ["hotlist", "rss", "new_items", "standalone", "ai_analysis"]
+    # featured（AIHOT 风格"精选"区）放最前
+    default_region_order = ["featured", "hotlist", "rss", "new_items", "standalone", "ai_analysis"]
     if region_order is None:
         region_order = default_region_order
+    elif "featured" not in region_order:
+        # 兼容旧自定义 region_order：自动把 featured 加到最前
+        region_order = ["featured"] + list(region_order)
 
     html = """
     <!DOCTYPE html>
@@ -449,6 +453,154 @@ def render_html_content(
             body.dark-mode .score-badge.score-high { background: #7f1d1d; color: #fecaca; }
             body.dark-mode .score-badge.score-mid  { background: #7c2d12; color: #fed7aa; }
             body.dark-mode .score-badge.score-low  { background: #374151; color: #d1d5db; }
+
+            /* === AIHOT 风格精选区（左时间轴 + 右卡片） === */
+            .aihot-section {
+                background: #ffffff;
+                border-radius: 8px;
+                padding: 20px 24px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .aihot-section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #f3f4f6;
+                margin-bottom: 16px;
+                padding-bottom: 8px;
+            }
+            .aihot-tabs { display: flex; gap: 4px; }
+            .aihot-tab {
+                display: inline-block;
+                padding: 8px 14px;
+                color: #9ca3af;
+                font-weight: 500;
+                font-size: 14px;
+                cursor: pointer;
+                border-bottom: 2px solid transparent;
+                margin-bottom: -2px;
+            }
+            .aihot-tab.active {
+                color: #2563eb;
+                border-bottom-color: #2563eb;
+                font-weight: 600;
+            }
+            .aihot-section-count { color: #9ca3af; font-size: 12px; }
+            .aihot-day {
+                font-weight: 600;
+                color: #6b7280;
+                margin: 18px 0 10px;
+                padding-left: 4px;
+                font-size: 13px;
+                letter-spacing: 0.4px;
+            }
+            .aihot-rows { display: flex; flex-direction: column; gap: 12px; }
+            .aihot-row {
+                display: grid;
+                grid-template-columns: 64px 1fr;
+                gap: 14px;
+                align-items: start;
+            }
+            .aihot-time {
+                padding-top: 14px;
+                padding-right: 10px;
+                text-align: right;
+                border-right: 2px solid #e5e7eb;
+                position: relative;
+                font-variant-numeric: tabular-nums;
+            }
+            .aihot-time .tl-dot {
+                position: absolute;
+                right: -7px;
+                top: 18px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #ffffff;
+                border: 2px solid #2563eb;
+                box-shadow: 0 0 0 2px #ffffff;
+            }
+            .aihot-time .tl-time {
+                font-size: 12px;
+                color: #6b7280;
+                font-weight: 500;
+            }
+            .aihot-card {
+                background: #f9fafb;
+                border-radius: 8px;
+                padding: 14px 16px;
+                border: 1px solid #f3f4f6;
+                transition: box-shadow 0.15s ease;
+            }
+            .aihot-card:hover {
+                background: #ffffff;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            }
+            .aihot-card-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 6px;
+                font-size: 12px;
+            }
+            .aihot-source { color: #6b7280; font-weight: 500; }
+            .aihot-score-pill {
+                padding: 2px 9px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: 700;
+                white-space: nowrap;
+                font-variant-numeric: tabular-nums;
+            }
+            .aihot-score-pill.score-high { background: #fee2e2; color: #b91c1c; }
+            .aihot-score-pill.score-mid  { background: #ffedd5; color: #c2410c; }
+            .aihot-score-pill.score-low  { background: #f3f4f6; color: #6b7280; }
+            .aihot-title {
+                display: block;
+                font-size: 15px;
+                line-height: 1.5;
+                color: #1e40af;
+                text-decoration: none;
+                font-weight: 500;
+                margin: 4px 0 6px;
+            }
+            .aihot-title:hover { color: #2563eb; text-decoration: underline; }
+            .aihot-card-tags {
+                font-size: 11px;
+                color: #9ca3af;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 4px;
+            }
+            .aihot-tag {
+                background: #f0f0f0;
+                padding: 1px 8px;
+                border-radius: 8px;
+            }
+            .aihot-tag.aihot-cluster { background: #fff7ed; color: #c2410c; }
+
+            body.dark-mode .aihot-section { background: #1f2937; }
+            body.dark-mode .aihot-section-header { border-bottom-color: #374151; }
+            body.dark-mode .aihot-tab.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+            body.dark-mode .aihot-card { background: #111827; border-color: #374151; }
+            body.dark-mode .aihot-card:hover { background: #0f172a; }
+            body.dark-mode .aihot-source { color: #9ca3af; }
+            body.dark-mode .aihot-time { border-right-color: #374151; }
+            body.dark-mode .aihot-time .tl-dot { background: #1f2937; box-shadow: 0 0 0 2px #1f2937; }
+            body.dark-mode .aihot-tag { background: #374151; color: #d1d5db; }
+            body.dark-mode .aihot-title { color: #93c5fd; }
+            body.dark-mode .aihot-title:hover { color: #60a5fa; }
+
+            @media (max-width: 600px) {
+                .aihot-section { padding: 14px 12px; }
+                .aihot-row { grid-template-columns: 52px 1fr; gap: 10px; }
+                .aihot-time { padding-right: 8px; padding-top: 12px; }
+                .aihot-card { padding: 12px 12px; }
+                .aihot-title { font-size: 14px; }
+            }
 
             .news-title {
                 font-size: 15px;
@@ -1346,6 +1498,11 @@ def render_html_content(
     stats_html = ""
     tab_bar_html = ""
     if report_data["stats"]:
+        # 跳过 context.py 注入的 "🔥 今日精选" 组（已被 featured 区独立渲染）
+        report_data = dict(report_data)
+        report_data["stats"] = [s for s in report_data["stats"] if not str(s.get("word", "")).startswith("🔥")]
+
+    if report_data["stats"]:
         total_count = len(report_data["stats"])
 
         # 生成 Tab 栏 HTML
@@ -1571,6 +1728,12 @@ def render_html_content(
         Returns:
             渲染后的 HTML 字符串
         """
+        if not stats:
+            return ""
+
+        # HTML 报告里跳过 context.py 注入的 "🔥 今日精选 Top N" 组
+        # （它已经被上方 featured 区独立渲染，这里再渲染一次会视觉重复）
+        stats = [s for s in stats if not str(s.get("word", "")).startswith("🔥")]
         if not stats:
             return ""
 
@@ -1912,6 +2075,127 @@ def render_html_content(
                 </div>"""
         return standalone_html
 
+    # === AIHOT 风格"精选"区（左时间轴 + 右卡片） ===
+    def _extract_date_time(time_str: str) -> tuple:
+        """从 ISO 或 HH-MM 提取 (date_label, time_label)。失败返回 ('其他', '--:--')"""
+        if not time_str:
+            return ("其他", "--:--")
+        s = str(time_str).strip()
+        # ISO 格式 (RSS)
+        if "T" in s or "+" in s or s.endswith("Z") or len(s) > 10:
+            try:
+                normalized = s.replace("Z", "+00:00")
+                if "+" in normalized or normalized.count("-") > 2:
+                    dt_obj = datetime.fromisoformat(normalized)
+                else:
+                    main = normalized.replace("T", " ").split(".")[0]
+                    dt_obj = datetime.fromisoformat(main)
+                # 月日 + HH:MM
+                return (
+                    f"{dt_obj.month}月{dt_obj.day}日",
+                    dt_obj.strftime("%H:%M"),
+                )
+            except (ValueError, TypeError):
+                pass
+        # HH-MM (热榜)
+        if len(s) == 5 and "-" in s:
+            return ("今日", s.replace("-", ":"))
+        # 友好格式如 "5月7日 13:30"
+        return ("今日", s)
+
+    def _collect_featured_items(top_n: int) -> List[Dict]:
+        seen = set()
+        pool: List[Dict] = []
+        for stat_list in (report_data.get("stats", []) or [], rss_items or []):
+            for stat in stat_list:
+                # 跳过 context.py 里注入的 "🔥 今日精选" 组（避免重复）
+                if str(stat.get("word", "")).startswith("🔥"):
+                    continue
+                for t in stat.get("titles", []):
+                    key = t.get("url") or t.get("mobile_url") or t.get("title", "")
+                    if not key or key in seen:
+                        continue
+                    if "final_score" not in t:
+                        continue
+                    seen.add(key)
+                    pool.append(t)
+        pool.sort(key=lambda x: -float(x.get("final_score") or 0))
+        return pool[:top_n]
+
+    def render_featured_html(top_n: int = 20) -> str:
+        items = _collect_featured_items(top_n)
+        if not items:
+            return ""
+
+        # 按日期分组（同组内仍按 final_score DESC，因为 items 已经全局排序了）
+        from collections import OrderedDict
+        groups: "OrderedDict[str, list]" = OrderedDict()
+        for item in items:
+            time_basis = item.get("first_time") or item.get("time_display") or item.get("last_time") or ""
+            date_label, time_label = _extract_date_time(time_basis)
+            groups.setdefault(date_label, []).append((time_label, item))
+
+        out = f"""
+                <div class="aihot-section">
+                    <div class="aihot-section-header">
+                        <div class="aihot-tabs">
+                            <span class="aihot-tab active">🔥 精选</span>
+                        </div>
+                        <div class="aihot-section-count">{len(items)} 条 · 按 final_score 排序</div>
+                    </div>"""
+
+        for date_label, group_items in groups.items():
+            out += f'\n                    <div class="aihot-day">📅 {html_escape(date_label)}</div>'
+            out += '\n                    <div class="aihot-rows">'
+            for time_label, item in group_items:
+                try:
+                    fs = float(item.get("final_score") or 0.0)
+                except (ValueError, TypeError):
+                    fs = 0.0
+                tier = str(item.get("tier") or "").strip()
+                score_label = f"{tier} {fs:.2f}" if tier else f"{fs:.2f}"
+                score_cls = "score-high" if fs >= 0.7 else ("score-mid" if fs >= 0.5 else "score-low")
+
+                title = html_escape(item.get("title", ""))
+                url = item.get("mobile_url") or item.get("url") or ""
+                source_name = html_escape(item.get("source_name", ""))
+                matched = html_escape(item.get("matched_keyword", ""))
+                cluster_count = int(item.get("cluster_count", 1) or 1)
+
+                title_link = (
+                    f'<a href="{html_escape(url)}" target="_blank" class="aihot-title">{title}</a>'
+                    if url else f'<span class="aihot-title">{title}</span>'
+                )
+
+                tags_html = ""
+                if matched:
+                    tags_html += f'<span class="aihot-tag">{matched}</span>'
+                if cluster_count > 1:
+                    tags_html += f'<span class="aihot-tag aihot-cluster">+{cluster_count - 1} 同事件</span>'
+
+                out += f"""
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">{html_escape(time_label)}</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">{source_name or '—'}</span>
+                                    <span class="aihot-score-pill {score_cls}">📊 {html_escape(score_label)}</span>
+                                </div>
+                                {title_link}
+                                <div class="aihot-card-tags">{tags_html}</div>
+                            </article>
+                        </div>"""
+            out += '\n                    </div>'
+
+        out += '\n                </div>'
+        return out
+
+    featured_top_n_cfg = 20
+    featured_html = render_featured_html(featured_top_n_cfg)
+
     # 生成 RSS 统计和新增 HTML
     rss_stats_html = render_rss_stats_html(rss_items, "RSS 订阅更新") if rss_items else ""
     rss_new_html = render_rss_stats_html(rss_new_items, "RSS 新增更新") if rss_new_items else ""
@@ -1924,6 +2208,7 @@ def render_html_content(
 
     # 准备各区域内容映射
     region_contents = {
+        "featured": featured_html,
         "hotlist": stats_html,
         "rss": rss_stats_html,
         "new_items": (new_titles_html, rss_new_html),  # 元组，分别处理
