@@ -113,26 +113,293 @@ rss:
   # - 正整数：覆盖全局设置，只推送此天数内的文章
   # - 0：禁用此频道的新鲜度过滤，推送所有文章
   feeds:
+    # ── 博客 / 官方 RSS ──────────────────────────────
+    - id: "openai-blog"
+      name: "OpenAI Blog"
+      url: "https://openai.com/news/rss.xml"
+      max_age_days: 3
+
+    - id: "google-deepmind"
+      name: "Google DeepMind Blog"
+      url: "https://deepmind.google/blog/rss/"
+      max_age_days: 3
+
+    - id: "huggingface-blog"
+      name: "Hugging Face Blog"
+      url: "https://huggingface.co/blog/feed.xml"
+      max_age_days: 3
+
+    - id: "cloudflare-blog"
+      name: "Cloudflare Blog"
+      url: "https://blog.cloudflare.com/rss/"
+      max_age_days: 3
+
+    - id: "latent-space"
+      name: "Latent Space"
+      url: "https://www.latent.space/feed"
+      max_age_days: 7
+
+    - id: "spring-blog"
+      name: "Spring Blog"
+      url: "https://spring.io/blog.atom"
+      max_age_days: 7
+
+    - id: "google-developers"
+      name: "Google Developers Blog"
+      url: "https://developers.googleblog.com/feeds/posts/default"
+      max_age_days: 7
+
+    - id: "infoq"
+      name: "InfoQ"
+      url: "https://www.infoq.com/RSS/articles/"
+      max_age_days: 3
+
+    - id: "freecodecamp"
+      name: "freeCodeCamp"
+      url: "https://www.freecodecamp.org/news/rss"
+      max_age_days: 7
+
+    - id: "lex-fridman"
+      name: "Lex Fridman Podcast"
+      url: "https://lexfridman.com/feed/podcast/"
+      max_age_days: 14
+
     - id: "hacker-news"
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
+      max_age_days: 1
+
+    # ── Twitter/X 人物（需 RSSHub，可能不稳定）────────
+    # 若推送异常可将 enabled 改为 false
+    - id: "sama"
+      name: "Sam Altman"
+      url: "https://rsshub.app/twitter/user/sama"
+      max_age_days: 3
+
+    - id: "pmarca"
+      name: "Marc Andreessen"
+      url: "https://rsshub.app/twitter/user/pmarca"
+      max_age_days: 3
+
+    - id: "gdb"
+      name: "Greg Brockman"
+      url: "https://rsshub.app/twitter/user/gdb"
+      max_age_days: 3
+
+    - id: "andrew-ng"
+      name: "Andrew Ng"
+      url: "https://rsshub.app/twitter/user/AndrewYNg"
+      max_age_days: 3
+
+    - id: "dario-amodei"
+      name: "Dario Amodei"
+      url: "https://rsshub.app/twitter/user/DarioAmodei"
+      max_age_days: 3
+
+    - id: "logan-kilpatrick"
+      name: "Logan Kilpatrick"
+      url: "https://rsshub.app/twitter/user/OfficialLoganK"
+      max_age_days: 3
+
+    - id: "karpathy"
+      name: "Andrej Karpathy"
+      url: "https://rsshub.app/twitter/user/karpathy"
+      max_age_days: 7
+
+    - id: "anthropic-twitter"
+      name: "Anthropic (@AnthropicAI)"
+      url: "https://rsshub.app/twitter/user/AnthropicAI"
+      max_age_days: 3
+
+    - id: "openai-twitter"
+      name: "OpenAI (@OpenAI)"
+      url: "https://rsshub.app/twitter/user/OpenAI"
+      max_age_days: 3
+
+    # ── 博客 / 官方 RSS（补充）──────────────────────────
+    - id: "github-blog"
+      name: "The GitHub Blog"
+      url: "https://github.blog/feed"
+      max_age_days: 7
+
+    - id: "simon-willison"
+      name: "Simon Willison's Weblog"
+      url: "https://simonwillison.net/feeds/all.atom"
+      max_age_days: 7
+
+    - id: "martin-fowler"
+      name: "Martin Fowler"
+      url: "https://martinfowler.com/feed.atom"
+      max_age_days: 14
+
+    - id: "langchain-blog"
+      name: "LangChain Blog"
+      url: "https://blog.langchain.dev/feed"
+      max_age_days: 7
+
+    - id: "qbitai"
+      name: "量子位"
+      url: "https://www.qbitai.com/feed"
+      max_age_days: 2
+
+    # ── 中文媒体（via RSSHub WeChat，可能不稳定）─────────
+    - id: "xinzhiyuan"
+      name: "新智元"
+      url: "https://rsshub.app/wechat/xinzhiyuan"
+      max_age_days: 2
+
+    - id: "jiqizhixin"
+      name: "机器之心"
+      url: "https://rsshub.app/wechat/jiqizhixin"
+      max_age_days: 2
 
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
       url: "http://www.ruanyifeng.com/blog/atom.xml"
-      enabled: false                  # 禁用
-      # max_age_days: 3               # 示例：推送 3 天内的文章（更新较慢的博客）
-     
-    - id: "yahoo-finance"
-      name: "雅虎财经"
-      url: "https://finance.yahoo.com/news/rssindex"
+      max_age_days: 14
 
-    # 自定义源示例
-    # - id: "custom-feed"
-    #   name: "自定义源"
-    #   url: "https://example.com/feed.xml"
-    #   enabled: false
-    #   max_age_days: 0               # 示例：禁用过滤，推送所有文章
+    - id: "infoq-cn"
+      name: "InfoQ中文"
+      url: "https://www.infoq.cn/feed"
+      max_age_days: 3
+
+    - id: "baoyu"
+      name: "宝玉的分享"
+      url: "https://s.baoyu.io/feed.xml"
+      max_age_days: 7
+
+    # ── 国内 AI 公司（Twitter/X via RSSHub）─────────────
+    - id: "deepseek-twitter"
+      name: "DeepSeek"
+      url: "https://rsshub.app/twitter/user/deepseek_ai"
+      max_age_days: 3
+
+    - id: "zhipu-twitter"
+      name: "智谱 ZhipuAI"
+      url: "https://rsshub.app/twitter/user/Zhipu_AI"
+      max_age_days: 3
+
+    - id: "kimi-twitter"
+      name: "月之暗面 Kimi"
+      url: "https://rsshub.app/twitter/user/MoonshotAI_"
+      max_age_days: 3
+
+    - id: "minimax-twitter"
+      name: "Minimax稀宇科技"
+      url: "https://rsshub.app/twitter/user/MiniMax_AI"
+      max_age_days: 3
+
+    # ── 微信公众号（via wechat2rss.xlab.app）────────────────
+    - id: "tencent-tech"
+      name: "腾讯技术工程"
+      url: "https://wechat2rss.xlab.app/feed/9685937b45fe9c7a526dbc32e4f24ba879a65b9a.xml"
+      max_age_days: 7
+
+    - id: "ali-tech"
+      name: "阿里技术"
+      url: "https://wechat2rss.xlab.app/feed/6e1f9b775f7a5841ac1a94310f0478b45a02ec01.xml"
+      max_age_days: 7
+
+    - id: "aliyun-dev"
+      name: "阿里云开发者"
+      url: "https://wechat2rss.xlab.app/feed/c74ed6db00cfbf16f2a048a165b4453f982681f0.xml"
+      max_age_days: 7
+
+    # ── 借鉴 AIHOT 信源（2026-05 新增）─────────────────────
+    # 官方研究博客（T1 一手）
+    - id: "apple-ml-research"
+      name: "Apple Machine Learning Research"
+      url: "https://machinelearning.apple.com/rss.xml"
+      max_age_days: 14
+
+    - id: "nvidia-deep-learning"
+      name: "NVIDIA Deep Learning Blog"
+      url: "https://blogs.nvidia.com/blog/category/deep-learning/feed/"
+      max_age_days: 7
+
+    # AI 媒体（T2 媒体）
+    - id: "the-decoder"
+      name: "The Decoder: AI News"
+      url: "https://the-decoder.com/feed/"
+      max_age_days: 3
+
+    - id: "ithome"
+      name: "IT之家"
+      url: "https://www.ithome.com/rss/"
+      max_age_days: 1
+
+    # KOL 长内容（T2 KOL）
+    - id: "interconnects"
+      name: "Nathan Lambert · Interconnects"
+      url: "https://www.interconnects.ai/feed"
+      max_age_days: 14
+
+    # ── AIHOT 同款 KOL（Twitter/X via RSSHub，可能不稳定）──
+    - id: "swyx"
+      name: "swyx"
+      url: "https://rsshub.app/twitter/user/swyx"
+      max_age_days: 3
+
+    - id: "emollick"
+      name: "Ethan Mollick"
+      url: "https://rsshub.app/twitter/user/emollick"
+      max_age_days: 3
+
+    - id: "rohanpaul-ai"
+      name: "Rohan Paul"
+      url: "https://rsshub.app/twitter/user/rohanpaul_ai"
+      max_age_days: 3
+
+    - id: "kimmonismus"
+      name: "Chubby (kimmonismus)"
+      url: "https://rsshub.app/twitter/user/kimmonismus"
+      max_age_days: 3
+
+    - id: "shao-meng"
+      name: "meng shao"
+      url: "https://rsshub.app/twitter/user/shao__meng"
+      max_age_days: 3
+
+    - id: "op7418"
+      name: "歸藏 (op7418)"
+      url: "https://rsshub.app/twitter/user/op7418"
+      max_age_days: 3
+
+    - id: "vista8"
+      name: "向阳乔木 (vista8)"
+      url: "https://rsshub.app/twitter/user/vista8"
+      max_age_days: 3
+
+    - id: "ayi-ai-notes"
+      name: "阿绎 AYi"
+      url: "https://rsshub.app/twitter/user/AYi_AInotes"
+      max_age_days: 3
+
+    # ── AIHOT 同款官方账号（Twitter/X via RSSHub）────────
+    - id: "perplexity-twitter"
+      name: "Perplexity (@perplexity_ai)"
+      url: "https://rsshub.app/twitter/user/perplexity_ai"
+      max_age_days: 3
+
+    - id: "gemini-app"
+      name: "Google Gemini (@GeminiApp)"
+      url: "https://rsshub.app/twitter/user/GeminiApp"
+      max_age_days: 3
+
+    - id: "xai-twitter"
+      name: "xAI (@xai)"
+      url: "https://rsshub.app/twitter/user/xai"
+      max_age_days: 3
+
+    - id: "tencent-hunyuan"
+      name: "腾讯混元 (@TencentHunyuan)"
+      url: "https://rsshub.app/twitter/user/TencentHunyuan"
+      max_age_days: 3
+
+    - id: "replit-twitter"
+      name: "Replit (@Replit)"
+      url: "https://rsshub.app/twitter/user/Replit"
+      max_age_days: 3
 
 
 # ===============================================================
