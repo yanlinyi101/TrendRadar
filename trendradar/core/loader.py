@@ -324,6 +324,16 @@ def _load_ai_filter_config(config_data: Dict) -> Dict:
     """加载 AI 智能筛选配置（由 filter.method 控制是否启用）"""
     ai_filter = config_data.get("ai_filter", {})
 
+    # Phase 4: 5 维评分加权（仅当 prompt 输出 scores 字典时生效）
+    raw_dw = ai_filter.get("dim_weights", {}) or {}
+    dim_weights = {
+        "importance": float(raw_dw.get("importance", 0.30)),
+        "novelty": float(raw_dw.get("novelty", 0.25)),
+        "depth": float(raw_dw.get("depth", 0.20)),
+        "actionable": float(raw_dw.get("actionable", 0.15)),
+        "controversy": float(raw_dw.get("controversy", 0.10)),
+    }
+
     return {
         "BATCH_SIZE": ai_filter.get("batch_size", 200),
         "BATCH_INTERVAL": ai_filter.get("batch_interval", 5),
@@ -333,6 +343,7 @@ def _load_ai_filter_config(config_data: Dict) -> Dict:
         "UPDATE_TAGS_PROMPT_FILE": ai_filter.get("update_tags_prompt_file", "update_tags_prompt.txt"),
         "RECLASSIFY_THRESHOLD": ai_filter.get("reclassify_threshold", 0.6),
         "MIN_SCORE": float(ai_filter.get("min_score", 0)),
+        "DIM_WEIGHTS": dim_weights,
     }
 
 

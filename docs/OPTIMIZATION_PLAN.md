@@ -210,10 +210,50 @@ AIHOT 的做法：**embedding 相似度聚簇 + 簇内按权威度选主条**。
 
 ## 6. 已经在 config.yaml 落地的事
 
-本次 commit 已经做的（与本方案配套）：
 - ✅ 新增 17 个借鉴 AIHOT 的信源（Apple ML / NVIDIA / The Decoder / IT之家 / Interconnects / swyx / op7418 / vista8 / emollick / kimmonismus / rohanpaul_ai / shao__meng / AYi_AInotes / Perplexity / GeminiApp / xAI / TencentHunyuan / Replit）
-- ⏳ tier 字段、source_tier 配置段、per-tier 阈值 — 待 Phase 1 落地
-- ⏳ 5 维评分 prompt — 待 Phase 4 落地
+- ✅ Phase 1：source_tier 配置段（T1=1.5 / T1.5=1.2 / T2=1.0 权重 + per-tier 阈值 0.55/0.65/0.70）
+- ✅ Phase 2：freshness_decay 配置段（half_life_hours=24，min_decay=0.05）
+- ✅ Phase 3：event_clustering 配置段（SimHash 64-bit，threshold=16）
+- ✅ Phase 4：prompt_multi_dim.txt + dim_weights 配置段
+
+## 8. Phase 4 阈值校准（重要！）
+
+切到 5 维评分后，relevance_score 是 5 个维度的加权平均：
+
+```
+ai_relevance = 0.30×importance + 0.25×novelty + 0.20×depth
+             + 0.15×actionable + 0.10×controversy
+```
+
+经验值：一条**很重要、很新、但深度一般**的新闻（importance=0.9, novelty=0.8,
+depth=0.4, actionable=0.3, controversy=0.2）聚合后 ≈ **0.615**。
+
+也就是说，**5 维下的 0.6 ≈ 旧单分模式的 0.8**。如果你直接套旧的阈值
+(T1≥0.55 / T1.5≥0.65 / T2≥0.70)，会把 90% 的好内容误杀。
+
+**建议第一周先把所有阈值砍掉一档**：
+
+```yaml
+source_tier:
+  per_tier_min_score:
+    T1: 0.40    # 原 0.55
+    T1.5: 0.50  # 原 0.65
+    T2: 0.55    # 原 0.70
+```
+
+跑 3-5 天后看 `output/trendradar.log` 里 "tier 命中" 行的分布，按需微调。
+
+如果嫌 5 维评分让分数不够"聚拢"，可以调整 dim_weights 让重要性权重更高：
+
+```yaml
+ai_filter:
+  dim_weights:
+    importance: 0.45    # 原 0.30
+    novelty: 0.25
+    depth: 0.15
+    actionable: 0.10
+    controversy: 0.05
+```
 
 ---
 

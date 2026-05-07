@@ -491,7 +491,19 @@ ai_filter:
   # 以下提示词模板一般无需修改（不建议动）
 
   # 分类提示词模板
-  prompt_file: "prompt.txt"
+  # Phase 4: 切到 prompt_multi_dim.txt 启用 5 维评分（importance/novelty/depth/actionable/controversy）
+  # 想回退到单分模式，把这里改回 "prompt.txt"
+  prompt_file: "prompt_multi_dim.txt"
+
+  # Phase 4: 5 维评分加权
+  # 仅当 prompt 输出 scores 字典时生效；输出旧版单分 score 时本配置自动忽略
+  # 总和不必正好等于 1.0，parser 会自动归一化
+  dim_weights:
+    importance: 0.30   # 重要性：行业大事/技术突破/重要变更
+    novelty: 0.25      # 新颖性：是否新颖（炒冷饭得分低）
+    depth: 0.20        # 深度：带数据/代码/实验的硬内容（八卦得分低）
+    actionable: 0.15   # 可操作性：API/工具/教程/可复现实验
+    controversy: 0.10  # 争议性：弱信号/异动/观点分裂
 
 
 # ===============================================================
@@ -523,10 +535,15 @@ source_tier:
 
   # tier 入选阈值（覆盖 ai_filter.min_score）
   # 用 ai_relevance（原始分），不是 final_score
+  #
+  # ⚠️ 阈值与 prompt 输出格式耦合：
+  # - 旧版 prompt.txt（单分 score）：分布在 0.5-0.95，建议 T1≥0.55/T1.5≥0.65/T2≥0.70
+  # - 新版 prompt_multi_dim.txt（5 维加权）：分布在 0.4-0.75（很难拿满分），
+  #   下面用的是 5 维下的建议值，旧 prompt 改回上面那组
   per_tier_min_score:
-    T1: 0.55
-    T1.5: 0.65
-    T2: 0.70
+    T1: 0.40    # 5 维下：单分约等于旧 0.55
+    T1.5: 0.50  # 5 维下：单分约等于旧 0.65
+    T2: 0.55    # 5 维下：单分约等于旧 0.70
 
   # 信源 → tier 映射（按 source_id / feed_id）
   # T2 走 default，不需要列出

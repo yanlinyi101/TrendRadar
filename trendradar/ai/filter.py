@@ -49,6 +49,20 @@ class AIFilter:
         self.get_time_func = get_time_func
         self.debug = debug
 
+        # Phase 4: 5 维评分加权（仅当 prompt 输出 scores 字典时生效）
+        # 默认权重总和=1.0；如果配置里总和不为 1，自动归一化
+        raw_dw = filter_config.get("DIM_WEIGHTS") or {}
+        defaults = {
+            "importance": 0.30,
+            "novelty": 0.25,
+            "depth": 0.20,
+            "actionable": 0.15,
+            "controversy": 0.10,
+        }
+        merged = {k: float(raw_dw.get(k, v)) for k, v in defaults.items()}
+        total = sum(merged.values()) or 1.0
+        self.dim_weights: Dict[str, float] = {k: v / total for k, v in merged.items()}
+
         # 加载提示词模板
         self.classify_system, self.classify_user = load_prompt_template(
             filter_config.get("PROMPT_FILE", "ai_filter_prompt.txt"),
@@ -439,8 +453,14 @@ class AIFilter:
             candidates = []
 
             if "tag_id" in item:
-                # 新格式（扁平）: {"id": 1, "tag_id": 1, "score": 0.9}
-                candidates.append({"tag_id": item["tag_id"], "score": item.get("score", 0.5)})
+                # 5 维格式（Phase 4）: {"id": 1, "tag_id": 1, "scores": {"importance":..., ...}}
+                # 单分格式（兼容）: {"id": 1, "tag_id": 1, "score": 0.9}
+                cand = {"tag_id": item["tag_id"]}
+                if "scores" in item and isinstance(item["scores"], dict):
+                    cand["scores"] = item["scores"]
+                else:
+                    cand["score"] = item.get("score", 0.5)
+                candidates.append(cand)
             elif "tags" in item:
                 # 旧格式（嵌套）: {"id": 1, "tags": [{"tag_id": 1, "score": 0.9}]}
                 matched_tags = item.get("tags", [])
@@ -458,6 +478,7 @@ class AIFilter:
             best_tag_id = None
             best_score = -1.0
 
+            best_dim_scores: Optional[Dict[str, float]] = None
             for tag_match in candidates:
                 if not isinstance(tag_match, dict):
                     continue
@@ -466,26 +487,35 @@ class AIFilter:
                     skipped_tag_ids += 1
                     continue
 
-                score = tag_match.get("score", 0.5)
-                try:
-                    score = float(score)
-                    score = max(0.0, min(1.0, score))
-                except (ValueError, TypeError):
-                    score = 0.5
+                # Phase 4: 5 维 scores 字典优先于单分 score
+                dim_scores = None
+                if "scores" in tag_match and isinstance(tag_match["scores"], dict):
+                    score, dim_scores = self._aggregate_dim_scores(tag_match["scores"])
+                else:
+                    score = tag_match.get("score", 0.5)
+                    try:
+                        score = float(score)
+                        score = max(0.0, min(1.0, score))
+                    except (ValueError, TypeError):
+                        score = 0.5
 
                 if score > best_score:
                     best_score = score
                     best_tag_id = tag_id
+                    best_dim_scores = dim_scores
 
             if best_tag_id is not None:
                 # 如果同一条新闻被多次返回，只保留分数更高的
                 existing = best_per_news.get(news_id)
                 if existing is None or best_score > existing["relevance_score"]:
-                    best_per_news[news_id] = {
+                    record = {
                         "news_item_id": news_id,
                         "tag_id": best_tag_id,
                         "relevance_score": best_score,
                     }
+                    if best_dim_scores is not None:
+                        record["dim_scores"] = best_dim_scores
+                    best_per_news[news_id] = record
 
         results = list(best_per_news.values())
 
@@ -517,6 +547,31 @@ class AIFilter:
                     print(line)
 
         return results
+
+    def _aggregate_dim_scores(self, raw_scores: Dict[str, Any]) -> tuple:
+        """
+        Phase 4: 把 5 维评分加权聚合为 ai_relevance ∈ [0, 1]
+
+        Args:
+            raw_scores: AI 返回的 {"importance": 0.9, "novelty": 0.7, ...}
+
+        Returns:
+            (aggregate_score, validated_dim_scores_dict)
+            缺失维度按 0 处理；验证后的 dim_scores 仅包含已知维度
+        """
+        validated: Dict[str, float] = {}
+        for dim, weight in self.dim_weights.items():
+            raw = raw_scores.get(dim, 0)
+            try:
+                v = float(raw)
+                v = max(0.0, min(1.0, v))
+            except (ValueError, TypeError):
+                v = 0.0
+            validated[dim] = v
+
+        aggregate = sum(self.dim_weights[d] * v for d, v in validated.items())
+        aggregate = max(0.0, min(1.0, aggregate))
+        return aggregate, validated
 
     def _extract_json(self, response: str) -> Optional[str]:
         """从 AI 响应中提取 JSON 字符串"""
