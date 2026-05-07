@@ -433,6 +433,23 @@ def render_html_content(
                 font-weight: 500;
             }
 
+            /* 分数徽标（Phase 1+2+4 final_score） */
+            .score-badge {
+                display: inline-block;
+                padding: 1px 6px;
+                border-radius: 10px;
+                font-size: 10px;
+                font-weight: 600;
+                margin-left: auto;
+                white-space: nowrap;
+            }
+            .score-badge.score-high { background: #fee2e2; color: #b91c1c; }
+            .score-badge.score-mid  { background: #ffedd5; color: #c2410c; }
+            .score-badge.score-low  { background: #f3f4f6; color: #6b7280; }
+            body.dark-mode .score-badge.score-high { background: #7f1d1d; color: #fecaca; }
+            body.dark-mode .score-badge.score-mid  { background: #7c2d12; color: #fed7aa; }
+            body.dark-mode .score-badge.score-low  { background: #374151; color: #d1d5db; }
+
             .news-title {
                 font-size: 15px;
                 line-height: 1.4;
@@ -1424,6 +1441,17 @@ def render_html_content(
                 if count_info > 1:
                     stats_html += f'<span class="count-info">{count_info}次</span>'
 
+                # final_score 徽标（Phase 1+2+4）
+                if "final_score" in title_data:
+                    try:
+                        _fs = float(title_data.get("final_score") or 0.0)
+                        _tier = str(title_data.get("tier") or "").strip()
+                        _label = f"{_tier} {_fs:.2f}" if _tier else f"{_fs:.2f}"
+                        _cls = "score-high" if _fs >= 0.7 else ("score-mid" if _fs >= 0.5 else "score-low")
+                        stats_html += f'<span class="score-badge {_cls}">📊 {html_escape(_label)}</span>'
+                    except (ValueError, TypeError):
+                        pass
+
                 stats_html += """
                             </div>
                             <div class="news-title">"""
@@ -1594,6 +1622,17 @@ def render_html_content(
 
                 if is_new:
                     rss_html += '<span class="rss-author" style="color: #dc2626;">NEW</span>'
+
+                # final_score 徽标（Phase 1+2+4）
+                if "final_score" in title_data:
+                    try:
+                        _fs = float(title_data.get("final_score") or 0.0)
+                        _tier = str(title_data.get("tier") or "").strip()
+                        _label = f"{_tier} {_fs:.2f}" if _tier else f"{_fs:.2f}"
+                        _cls = "score-high" if _fs >= 0.7 else ("score-mid" if _fs >= 0.5 else "score-low")
+                        rss_html += f'<span class="score-badge {_cls}">📊 {html_escape(_label)}</span>'
+                    except (ValueError, TypeError):
+                        pass
 
                 rss_html += """
                             </div>
