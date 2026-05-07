@@ -119,6 +119,20 @@ class AppContext:
         return self.rss_config.get("FEEDS", [])
 
     @property
+    def source_tier_config(self) -> Dict:
+        """获取信源分级配置（Phase 1）"""
+        return self.config.get("SOURCE_TIER", {}) or {}
+
+    def resolve_source_tier(self, source_id: str) -> str:
+        """根据 source_id 查 tier，未命中则用 default_tier"""
+        cfg = self.source_tier_config
+        mapping = cfg.get("SOURCE_TO_TIER", {}) or {}
+        default = cfg.get("DEFAULT_TIER", "T2") or "T2"
+        if not source_id:
+            return default
+        return mapping.get(source_id, default)
+
+    @property
     def display_mode(self) -> str:
         """获取显示模式 (keyword | platform)"""
         return self.config.get("DISPLAY_MODE", "keyword")
@@ -948,6 +962,17 @@ class AppContext:
         max_news = self.config.get("MAX_NEWS_PER_KEYWORD", 0)
         min_score = self.ai_filter_config.get("MIN_SCORE", 0)
 
+        # Phase 1: 信源分级（per-tier 阈值 + final_score 权重排序）
+        tier_cfg = self.source_tier_config
+        tier_enabled = bool(tier_cfg.get("ENABLED", False))
+        tier_weights = tier_cfg.get("WEIGHTS", {}) or {}
+        per_tier_min = tier_cfg.get("PER_TIER_MIN_SCORE", {}) or {}
+        default_tier = tier_cfg.get("DEFAULT_TIER", "T2") or "T2"
+
+        # 统计 tier 命中（用于落地后日志）
+        tier_kept_counter: Dict[str, int] = {}
+        tier_filtered_counter: Dict[str, int] = {}
+
         # current 模式：计算最新时间，只保留当前在榜的热榜新闻
         # 与 count_word_frequency(mode="current") 的过滤逻辑对齐
         latest_time = None
@@ -997,11 +1022,23 @@ class AppContext:
                         filtered_count += 1
                         continue
 
-                # 分数阈值过滤：跳过相关度低于 min_score 的新闻
-                if min_score > 0:
-                    score = item.get("relevance_score", 0)
-                    if score < min_score:
+                # 分数阈值过滤
+                # Phase 1: 启用 source_tier 时按 per-tier 阈值；否则回退到全局 min_score
+                score = item.get("relevance_score", 0)
+                if tier_enabled:
+                    item_tier = self.resolve_source_tier(item.get("source_id", ""))
+                    threshold = per_tier_min.get(item_tier, min_score)
+                    if threshold > 0 and score < threshold:
+                        tier_filtered_counter[item_tier] = tier_filtered_counter.get(item_tier, 0) + 1
                         continue
+                    tier_kept_counter[item_tier] = tier_kept_counter.get(item_tier, 0) + 1
+                    weight = float(tier_weights.get(item_tier, 1.0))
+                else:
+                    if min_score > 0 and score < min_score:
+                        continue
+                    item_tier = default_tier
+                    weight = 1.0
+                final_score = score * weight
 
                 # 构建时间显示
                 first_time = item.get("first_time", "")
@@ -1061,12 +1098,22 @@ class AppContext:
                     "is_new": is_new,
                     "time_display": time_display,
                     "matched_keyword": tag_name,
+                    # Phase 1: 信源分级元数据（仅写入，渲染层按需消费）
+                    "tier": item_tier,
+                    "relevance_score": score,
+                    "final_score": final_score,
                 }
 
                 if source_type == "rss":
                     rss_titles.append(title_entry)
                 else:
                     hotlist_titles.append(title_entry)
+
+            # Phase 1: 启用分级时，标签内按 final_score 降序重排
+            # 否则保留来自存储层的原顺序（仍为 relevance_score DESC）
+            if tier_enabled:
+                hotlist_titles.sort(key=lambda x: -x.get("final_score", 0))
+                rss_titles.sort(key=lambda x: -x.get("final_score", 0))
 
             if hotlist_titles:
                 if max_news > 0:
@@ -1092,7 +1139,21 @@ class AppContext:
             total_kept = sum(s["count"] for s in hotlist_stats)
             print(f"[AI筛选] current 模式：过滤 {filtered_count} 条已下榜新闻，保留 {total_kept} 条当前在榜")
 
-        if min_score > 0:
+        if tier_enabled:
+            # Phase 1: 输出 tier 命中分布
+            hotlist_kept = sum(s["count"] for s in hotlist_stats)
+            rss_kept = sum(s["count"] for s in rss_stats)
+            total_kept = hotlist_kept + rss_kept
+            parts = [f"热榜 {hotlist_kept} 条"]
+            if rss_kept > 0:
+                parts.append(f"RSS {rss_kept} 条")
+            tier_breakdown = ", ".join(
+                f"{t}={tier_kept_counter.get(t, 0)}/{tier_kept_counter.get(t, 0) + tier_filtered_counter.get(t, 0)}"
+                for t in ("T1", "T1.5", "T2")
+            )
+            thresholds = ", ".join(f"{t}≥{per_tier_min.get(t, 0)}" for t in ("T1", "T1.5", "T2"))
+            print(f"[AI筛选] 信源分级过滤：保留 {total_kept} 条 ({', '.join(parts)})；tier 命中 {tier_breakdown}；阈值 [{thresholds}]")
+        elif min_score > 0:
             hotlist_kept = sum(s["count"] for s in hotlist_stats)
             rss_kept = sum(s["count"] for s in rss_stats)
             total_kept = hotlist_kept + rss_kept

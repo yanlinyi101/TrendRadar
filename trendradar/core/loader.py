@@ -336,6 +336,69 @@ def _load_ai_filter_config(config_data: Dict) -> Dict:
     }
 
 
+def _load_source_tier_config(config_data: Dict) -> Dict:
+    """加载信源分级配置（Phase 1: T1/T1.5/T2 权重与阈值）
+
+    返回结构：
+        {
+            "ENABLED": bool,
+            "DEFAULT_TIER": str,
+            "WEIGHTS": {tier: float},
+            "PER_TIER_MIN_SCORE": {tier: float},
+            "SOURCE_TO_TIER": {source_id: tier},  # 反向索引，便于 O(1) 查询
+        }
+    未配置或 enabled=false 时返回 ENABLED=False，调用方应回退到 ai_filter.min_score。
+    """
+    st = config_data.get("source_tier", {}) or {}
+
+    enabled = bool(st.get("enabled", False))
+    default_tier = str(st.get("default_tier", "T2"))
+
+    # 权重：缺省安全值（全部 1.0 表示不放大不压低）
+    raw_weights = st.get("weights", {}) or {}
+    weights = {
+        "T1": float(raw_weights.get("T1", 1.5)),
+        "T1.5": float(raw_weights.get("T1.5", 1.2)),
+        "T2": float(raw_weights.get("T2", 1.0)),
+    }
+
+    # per-tier 阈值：缺省时回退到 ai_filter.min_score
+    fallback_min = float((config_data.get("ai_filter") or {}).get("min_score", 0) or 0)
+    raw_min = st.get("per_tier_min_score", {}) or {}
+    per_tier_min_score = {
+        "T1": float(raw_min.get("T1", fallback_min)),
+        "T1.5": float(raw_min.get("T1.5", fallback_min)),
+        "T2": float(raw_min.get("T2", fallback_min)),
+    }
+
+    # 反向索引：source_id → tier
+    assignments = st.get("assignments", {}) or {}
+    source_to_tier: Dict[str, str] = {}
+    duplicates = []
+    for tier_name, source_ids in assignments.items():
+        if not isinstance(source_ids, list):
+            continue
+        for sid in source_ids:
+            sid = str(sid).strip()
+            if not sid:
+                continue
+            if sid in source_to_tier and source_to_tier[sid] != tier_name:
+                duplicates.append((sid, source_to_tier[sid], tier_name))
+            source_to_tier[sid] = str(tier_name)
+
+    if duplicates:
+        for sid, t1, t2 in duplicates:
+            print(f"[警告] source_tier 中信源 {sid} 同时出现在 {t1} 和 {t2}，使用后者")
+
+    return {
+        "ENABLED": enabled,
+        "DEFAULT_TIER": default_tier,
+        "WEIGHTS": weights,
+        "PER_TIER_MIN_SCORE": per_tier_min_score,
+        "SOURCE_TO_TIER": source_to_tier,
+    }
+
+
 def _load_filter_config(config_data: Dict) -> Dict:
     """加载筛选策略配置"""
     filter_cfg = config_data.get("filter", {})
@@ -592,6 +655,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     # AI 智能筛选配置
     config["AI_FILTER"] = _load_ai_filter_config(config_data)
+
+    # 信源分级配置（Phase 1）
+    config["SOURCE_TIER"] = _load_source_tier_config(config_data)
 
     # 筛选策略配置
     config["FILTER"] = _load_filter_config(config_data)

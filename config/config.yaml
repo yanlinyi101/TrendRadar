@@ -493,6 +493,75 @@ ai_filter:
   # 分类提示词模板
   prompt_file: "prompt.txt"
 
+
+# ===============================================================
+# 4.7 信源分级（Phase 1: 借鉴 AIHOT「AI 给事实打分，代码定排名」）
+#
+# 思路：给每个信源贴 T1/T1.5/T2 标签，把 AI 主观评分（relevance_score）
+# 用确定性的代码权重锚定到信源权威度上：
+#
+#   final_score = relevance_score × tier_weight
+#   入选条件     = relevance_score >= per_tier_min_score[tier]
+#
+# 这样：
+#   - 一手信源（T1）阈值更低，不会被 AI 的 0.6 误杀；
+#   - KOL 转发评测（T2）阈值更高，自动压住噪音；
+#   - 同一标签下排序按 final_score 降序，T1 自然冒头。
+#
+# 不在 assignments 里的信源使用 default_tier。
+# 关掉本机制：把 enabled 改成 false，回退到全局 ai_filter.min_score。
+# ===============================================================
+source_tier:
+  enabled: true
+  default_tier: "T2"
+
+  # tier 权重（影响排序）
+  weights:
+    T1: 1.5
+    T1.5: 1.2
+    T2: 1.0
+
+  # tier 入选阈值（覆盖 ai_filter.min_score）
+  # 用 ai_relevance（原始分），不是 final_score
+  per_tier_min_score:
+    T1: 0.55
+    T1.5: 0.65
+    T2: 0.70
+
+  # 信源 → tier 映射（按 source_id / feed_id）
+  # T2 走 default，不需要列出
+  assignments:
+    T1:
+      # 官方研究/工程博客（一手）
+      - openai-blog
+      - google-deepmind
+      - huggingface-blog
+      - cloudflare-blog
+      - spring-blog
+      - google-developers
+      - github-blog
+      - langchain-blog
+      - apple-ml-research
+      - nvidia-deep-learning
+    T1.5:
+      # 官方 X 账号
+      - anthropic-twitter
+      - openai-twitter
+      - deepseek-twitter
+      - zhipu-twitter
+      - kimi-twitter
+      - minimax-twitter
+      - perplexity-twitter
+      - gemini-app
+      - xai-twitter
+      - tencent-hunyuan
+      - replit-twitter
+      # 创始人/CEO/官方代言人个人账号
+      - sama          # Sam Altman (OpenAI CEO)
+      - gdb           # Greg Brockman (OpenAI)
+      - dario-amodei  # Dario Amodei (Anthropic CEO)
+      - logan-kilpatrick  # Google DeepMind DevRel
+
   # 标签提取提示词模板（首次运行时使用）
   extract_prompt_file: "extract_prompt.txt"
 
