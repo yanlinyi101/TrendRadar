@@ -1219,9 +1219,8 @@ class AppContext:
             )
             thresholds = ", ".join(f"{t}≥{per_tier_min.get(t, 0)}" for t in ("T1", "T1.5", "T2"))
             print(f"[AI筛选] 信源分级过滤：保留 {total_kept} 条 ({', '.join(parts)})；tier 命中 {tier_breakdown}；阈值 [{thresholds}]")
-        if clustering_enabled and cluster_total_folded > 0:
-            print(f"[AI筛选] 事件聚类：折叠 {cluster_total_folded} 条同事件转发（threshold={cluster_threshold}）")
         elif min_score > 0:
+            # 旧版分数过滤日志（仅在 tier 未启用时打）
             hotlist_kept = sum(s["count"] for s in hotlist_stats)
             rss_kept = sum(s["count"] for s in rss_stats)
             total_kept = hotlist_kept + rss_kept
@@ -1229,6 +1228,10 @@ class AppContext:
             if rss_kept > 0:
                 parts.append(f"RSS {rss_kept} 条")
             print(f"[AI筛选] 分数过滤：min_score={min_score}，保留 {total_kept} 条 score≥{min_score} ({', '.join(parts)})")
+
+        # Phase 3: 事件聚类汇总（独立日志，与上面分级/分数日志互不影响）
+        if clustering_enabled and cluster_total_folded > 0:
+            print(f"[AI筛选] 事件聚类：折叠 {cluster_total_folded} 条同事件转发（threshold={cluster_threshold}）")
 
         priority_sort_enabled = self.ai_priority_sort_enabled
         if priority_sort_enabled:
