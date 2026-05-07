@@ -396,6 +396,154 @@
             body.dark-mode .score-badge.score-mid  { background: #7c2d12; color: #fed7aa; }
             body.dark-mode .score-badge.score-low  { background: #374151; color: #d1d5db; }
 
+            /* === AIHOT 风格精选区（左时间轴 + 右卡片） === */
+            .aihot-section {
+                background: #ffffff;
+                border-radius: 8px;
+                padding: 20px 24px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            }
+            .aihot-section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 2px solid #f3f4f6;
+                margin-bottom: 16px;
+                padding-bottom: 8px;
+            }
+            .aihot-tabs { display: flex; gap: 4px; }
+            .aihot-tab {
+                display: inline-block;
+                padding: 8px 14px;
+                color: #9ca3af;
+                font-weight: 500;
+                font-size: 14px;
+                cursor: pointer;
+                border-bottom: 2px solid transparent;
+                margin-bottom: -2px;
+            }
+            .aihot-tab.active {
+                color: #2563eb;
+                border-bottom-color: #2563eb;
+                font-weight: 600;
+            }
+            .aihot-section-count { color: #9ca3af; font-size: 12px; }
+            .aihot-day {
+                font-weight: 600;
+                color: #6b7280;
+                margin: 18px 0 10px;
+                padding-left: 4px;
+                font-size: 13px;
+                letter-spacing: 0.4px;
+            }
+            .aihot-rows { display: flex; flex-direction: column; gap: 12px; }
+            .aihot-row {
+                display: grid;
+                grid-template-columns: 64px 1fr;
+                gap: 14px;
+                align-items: start;
+            }
+            .aihot-time {
+                padding-top: 14px;
+                padding-right: 10px;
+                text-align: right;
+                border-right: 2px solid #e5e7eb;
+                position: relative;
+                font-variant-numeric: tabular-nums;
+            }
+            .aihot-time .tl-dot {
+                position: absolute;
+                right: -7px;
+                top: 18px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #ffffff;
+                border: 2px solid #2563eb;
+                box-shadow: 0 0 0 2px #ffffff;
+            }
+            .aihot-time .tl-time {
+                font-size: 12px;
+                color: #6b7280;
+                font-weight: 500;
+            }
+            .aihot-card {
+                background: #f9fafb;
+                border-radius: 8px;
+                padding: 14px 16px;
+                border: 1px solid #f3f4f6;
+                transition: box-shadow 0.15s ease;
+            }
+            .aihot-card:hover {
+                background: #ffffff;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            }
+            .aihot-card-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 6px;
+                font-size: 12px;
+            }
+            .aihot-source { color: #6b7280; font-weight: 500; }
+            .aihot-score-pill {
+                padding: 2px 9px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: 700;
+                white-space: nowrap;
+                font-variant-numeric: tabular-nums;
+            }
+            .aihot-score-pill.score-high { background: #fee2e2; color: #b91c1c; }
+            .aihot-score-pill.score-mid  { background: #ffedd5; color: #c2410c; }
+            .aihot-score-pill.score-low  { background: #f3f4f6; color: #6b7280; }
+            .aihot-title {
+                display: block;
+                font-size: 15px;
+                line-height: 1.5;
+                color: #1e40af;
+                text-decoration: none;
+                font-weight: 500;
+                margin: 4px 0 6px;
+            }
+            .aihot-title:hover { color: #2563eb; text-decoration: underline; }
+            .aihot-card-tags {
+                font-size: 11px;
+                color: #9ca3af;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 4px;
+            }
+            .aihot-tag {
+                background: #f0f0f0;
+                padding: 1px 8px;
+                border-radius: 8px;
+            }
+            .aihot-tag.aihot-cluster { background: #fff7ed; color: #c2410c; }
+
+            body.dark-mode .aihot-section { background: #1f2937; }
+            body.dark-mode .aihot-section-header { border-bottom-color: #374151; }
+            body.dark-mode .aihot-tab.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+            body.dark-mode .aihot-card { background: #111827; border-color: #374151; }
+            body.dark-mode .aihot-card:hover { background: #0f172a; }
+            body.dark-mode .aihot-source { color: #9ca3af; }
+            body.dark-mode .aihot-time { border-right-color: #374151; }
+            body.dark-mode .aihot-time .tl-dot { background: #1f2937; box-shadow: 0 0 0 2px #1f2937; }
+            body.dark-mode .aihot-tag { background: #374151; color: #d1d5db; }
+            body.dark-mode .aihot-title { color: #93c5fd; }
+            body.dark-mode .aihot-title:hover { color: #60a5fa; }
+
+            @media (max-width: 600px) {
+                .aihot-section { padding: 14px 12px; }
+                .aihot-row { grid-template-columns: 52px 1fr; gap: 10px; }
+                .aihot-time { padding-right: 8px; padding-top: 12px; }
+                .aihot-card { padding: 12px 12px; }
+                .aihot-title { font-size: 14px; }
+            }
+
             .news-title {
                 font-size: 15px;
                 line-height: 1.4;
@@ -1228,15 +1376,15 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">新闻总数</span>
-                        <span class="info-value">420 条</span>
+                        <span class="info-value">437 条</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">热点新闻</span>
-                        <span class="info-value">18 条</span>
+                        <span class="info-value">17 条</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">生成时间</span>
-                        <span class="info-value">05-07 14:47</span>
+                        <span class="info-value">05-07 15:01</span>
                     </div>
                 </div>
             </div>
@@ -1245,51 +1393,321 @@
                 <div class="search-bar">
                     <input type="text" class="search-input" placeholder="搜索新闻标题..." oninput="handleSearch(this.value)">
                 </div>
-                <div class="rss-section">
+                <div class="aihot-section">
+                    <div class="aihot-section-header">
+                        <div class="aihot-tabs">
+                            <span class="aihot-tab active">🔥 精选</span>
+                        </div>
+                        <div class="aihot-section-count">20 条 · 按 final_score 排序</div>
+                    </div>
+                    <div class="aihot-day">📅 其他</div>
+                    <div class="aihot-rows">
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.50</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/subagents-have-arrived-in-gemini-cli/" target="_blank" class="aihot-title">Gemini CLI 现已支持子代理</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.50</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/bring-state-of-the-art-agentic-skills-to-the-edge-with-gemma-4/" target="_blank" class="aihot-title">借助 Gemma 4，将顶尖代理技能部署到边缘端</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/" target="_blank" class="aihot-title">在谷歌 TPU 上加速大模型推理：通过扩散式推测解码实现 3 倍提速</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">大语言模型</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/" target="_blank" class="aihot-title">Agent Platform 中的 Agents CLI：通过单一命令行实现从创建到生产</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/production-ready-ai-agents-5-lessons-from-refactoring-a-monolith/" target="_blank" class="aihot-title">企业级 AI 代理：从单体重构中学到的五个教训</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/build-better-ai-agents-5-developer-tips-from-the-agent-bake-off/" target="_blank" class="aihot-title">构建更优 AI 代理：来自代理编程大赛的五条开发者建议</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/developers-guide-to-building-adk-agents-with-skills/" target="_blank" class="aihot-title">构建具备技能的 ADK 代理开发者指南</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.35</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/building-with-gemini-embedding-2/" target="_blank" class="aihot-title">使用 Gemini Embedding 2 进行构建：代理式多模态 RAG 及其扩展应用</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI工程实践</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/maxtext-expands-post-training-capabilities-introducing-sft-and-rl-on-single-host-tpus/" target="_blank" class="aihot-title">MaxText 扩展后训练能力：在单主机 TPU 上引入 SFT 和 RL</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">大语言模型</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/adk-go-10-arrives/" target="_blank" class="aihot-title">ADK Go 1.0 正式发布！</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/announcing-adk-for-java-100-building-the-future-of-ai-agents-in-java/" target="_blank" class="aihot-title">宣布推出 ADK for Java 1.0.0：在 Java 中构建 AI 代理的未来</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/closing-the-knowledge-gap-with-agent-skills/" target="_blank" class="aihot-title">通过代理技能弥补知识差距</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/building-real-world-on-device-ai-with-litert-and-npu/" target="_blank" class="aihot-title">使用 LiteRT 和 NPU 构建真实的端侧 AI</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI工程实践</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/torchtpu-running-pytorch-natively-on-tpus-at-google-scale/" target="_blank" class="aihot-title">TorchTPU：在谷歌规模的 TPU 上原生运行 PyTorch</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI工程实践</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.20</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/boost-training-goodput-how-continuous-checkpointing-optimizes-reliability-in-orbax-and-maxtext/" target="_blank" class="aihot-title">提升训练效率：Orbax 和 MaxText 中持续检查点如何优化可靠性</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI工程实践</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.05</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/speeding-up-ai-bringing-google-colossus-to-pytorch-via-gcsfs-and-rapid-bucket/" target="_blank" class="aihot-title">加速 AI：通过 GCSFS 和 Rapid Bucket 将 Google Colossus 引入 PyTorch</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">软件工程文化</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 1.05</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/new-enhancements-for-merchant-initiated-transactions-with-the-google-pay-api/" target="_blank" class="aihot-title">Google Pay API 商家发起交易的新增强功能</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">科技巨头动态</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">--:--</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">Google Developers Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 0.90</span>
+                                </div>
+                                <a href="https://developers.googleblog.com/a2ui-v0-9-generative-ui/" target="_blank" class="aihot-title">A2UI v0.9：可移植、框架无关的生成式 UI 新标准</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI产品应用</span></div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="aihot-day">📅 今日</div>
+                    <div class="aihot-rows">
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">05-07 05:16</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">The GitHub Blog</span>
+                                    <span class="aihot-score-pill score-high">📊 T1 0.91</span>
+                                </div>
+                                <a href="https://github.blog/ai-and-ml/generative-ai/validating-agentic-behavior-when-correct-isnt-deterministic/" target="_blank" class="aihot-title">在“正确”不确定时验证代理行为</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">AI Agent</span></div>
+                            </article>
+                        </div>
+                        <div class="aihot-row">
+                            <div class="aihot-time">
+                                <div class="tl-dot"></div>
+                                <div class="tl-time">05-07 18:00</div>
+                            </div>
+                            <article class="aihot-card">
+                                <div class="aihot-card-meta">
+                                    <span class="aihot-source">InfoQ中文</span>
+                                    <span class="aihot-score-pill score-high">📊 T2 0.80</span>
+                                </div>
+                                <a href="https://www.infoq.cn/article/wAml9HDVF8HuaQEhFesM?utm_source=rss&amp;utm_medium=article" target="_blank" class="aihot-title">京东 xLLM 的投机推理架构设计｜AICon 上海</a>
+                                <div class="aihot-card-tags"><span class="aihot-tag">大语言模型</span></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-divider rss-section">
                     <div class="rss-section-header">
                         <div class="rss-section-title">RSS 新增更新</div>
-                        <div class="rss-section-count">3 条</div>
+                        <div class="rss-section-count">1 条</div>
                     </div>
                     <div class="rss-feeds-grid">
                     <div class="feed-group">
                         <div class="feed-header">
-                            <div class="feed-name">宇树机器人</div>
+                            <div class="feed-name">AI 相关</div>
                             <div class="feed-count">1 条</div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 14:42</span><span class="rss-author">IT之家</span><span class="rss-author" style="color: #dc2626;">NEW</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 14:51</span><span class="rss-author">IT之家</span><span class="rss-author" style="color: #dc2626;">NEW</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.ithome.com/0/947/202.htm" target="_blank" class="rss-link">全球首个人形机器人任务动作应用商店：宇树 UniStore 官方共享应用平台正式全面开放</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feed-group">
-                        <div class="feed-header">
-                            <div class="feed-name">微软 / 谷歌 / 苹果</div>
-                            <div class="feed-count">1 条</div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 14:43</span><span class="rss-author">IT之家</span><span class="rss-author" style="color: #dc2626;">NEW</span>
-                            </div>
-                            <div class="rss-title"><a href="https://www.ithome.com/0/947/204.htm" target="_blank" class="rss-link">谷歌为 Gemma 4 系列 AI 模型推出 MTP 起草器，推理速度最高提升 3 倍</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feed-group">
-                        <div class="feed-header">
-                            <div class="feed-name">中国</div>
-                            <div class="feed-count">1 条</div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 14:36</span><span class="rss-author">IT之家</span><span class="rss-author" style="color: #dc2626;">NEW</span>
-                            </div>
-                            <div class="rss-title"><a href="https://www.ithome.com/0/947/185.htm" target="_blank" class="rss-link">消息称三星电子中国区内部已官宣善后工作，2026 年内显示器产品仍会继续销售</a>
+                            <div class="rss-title"><a href="https://www.ithome.com/0/947/207.htm" target="_blank" class="rss-link">用嘴干活：阿里千问 PC 端上线 AI 语音输入功能</a>
                             </div>
                         </div>
                     </div>
                     </div>
                 </div>
-                <div class="section-divider hotlist-section"><div class="tab-bar"><button class="tab-btn" data-tab-index="0">大语言模型<span class="tab-count">2</span></button><button class="tab-btn" data-tab-index="1">模型发布动态<span class="tab-count">2</span></button><button class="tab-btn" data-tab-index="2">游戏开发产业<span class="tab-count">7</span></button><button class="tab-btn" data-tab-index="3">软件工程文化<span class="tab-count">1</span></button><button class="tab-btn" data-tab-index="4">科技巨头动态<span class="tab-count">6</span></button><button class="tab-btn" data-tab-index="all">全部</button></div>
+                <div class="section-divider hotlist-section"><div class="tab-bar"><button class="tab-btn" data-tab-index="0">大语言模型<span class="tab-count">2</span></button><button class="tab-btn" data-tab-index="1">模型发布动态<span class="tab-count">2</span></button><button class="tab-btn" data-tab-index="2">游戏开发产业<span class="tab-count">5</span></button><button class="tab-btn" data-tab-index="3">软件工程文化<span class="tab-count">1</span></button><button class="tab-btn" data-tab-index="4">科技巨头动态<span class="tab-count">7</span></button><button class="tab-btn" data-tab-index="all">全部</button></div>
                 <div class="word-group" data-tab-index="0">
                     <div class="word-header">
                         <div class="word-info">
@@ -1301,7 +1719,7 @@
                     <div class="news-item ">
                         <div class="news-number">1</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num ">10</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num ">10</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://wallstreetcn.com/articles/3771667" target="_blank" class="news-link">国产大模型开启融资热：DeepSeek被曝投后估值或达450亿美元</a>
                             </div>
@@ -1310,7 +1728,7 @@
                     <div class="news-item ">
                         <div class="news-number">2</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">知乎</span><span class="rank-num top">2-12</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">知乎</span><span class="rank-num top">2-12</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.zhihu.com/question/2035415081798869913" target="_blank" class="news-link">如何看待蔡浩宇的硅谷 AI 公司战略转向，LLM 团队整体回流国内？</a>
                             </div>
@@ -1328,7 +1746,7 @@
                     <div class="news-item ">
                         <div class="news-number">1</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num high">4-5</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num high">4-5</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.cls.cn/detail/2364304" target="_blank" class="news-link">SpaceX成算力租赁巨头 Anthropic大手一挥包下Colossus 1全部容量</a>
                             </div>
@@ -1337,7 +1755,7 @@
                     <div class="news-item ">
                         <div class="news-number">2</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num ">12-13</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num ">11-13</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.cls.cn/detail/2364390" target="_blank" class="news-link">Anthropic自夸Q1年化收入暴涨80倍 日本疑似连续干预汇市 | 环球市场</a>
                             </div>
@@ -1348,14 +1766,14 @@
                     <div class="word-header">
                         <div class="word-info">
                             <div class="word-name">游戏开发产业</div>
-                            <div class="word-count warm">7 条</div>
+                            <div class="word-count warm">5 条</div>
                         </div>
                         <div class="word-index"><span class="collapse-icon">▼</span>3/5</div>
                     </div>
                     <div class="news-item ">
                         <div class="news-number">1</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">10-24</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">10-24</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://search.bilibili.com/all?keyword=GTA6%E8%90%A5%E9%94%80%E5%8D%B3%E5%B0%86%E5%BC%80%E5%90%AF" target="_blank" class="news-link">GTA6营销即将开启</a>
                             </div>
@@ -1364,7 +1782,7 @@
                     <div class="news-item ">
                         <div class="news-number">2</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">20-27</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">20-27</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E5%BC%82%E7%8E%AF%E6%A8%AA%E6%89%AB%E6%B5%B7%E5%A4%96%2C%E6%8E%80%E7%BF%BB%E6%97%A5%E6%9C%AC%E6%B8%B8%E6%88%8F%E5%9C%88&amp;topic_id=28354037" target="_blank" class="news-link">异环横扫海外,掀翻日本游戏圈</a>
                             </div>
@@ -1373,7 +1791,7 @@
                     <div class="news-item ">
                         <div class="news-number">3</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">11-18</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">11-18</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E6%98%9F%E9%93%81%E7%BB%AF%E8%8B%B1%E7%BB%BC%E5%90%88%E6%B5%8B%E8%AF%84" target="_blank" class="news-link">星铁绯英综合测评</a>
                             </div>
@@ -1382,7 +1800,7 @@
                     <div class="news-item ">
                         <div class="news-number">4</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">6-13</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">6-13</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E6%9A%B4%E9%9B%AA%E9%80%BC%E7%96%AF%E5%9D%A6%E5%85%8B%2C%E5%A4%A7%E5%BC%80%E6%91%86%E8%BF%90%E5%8A%A8%E5%BC%80%E5%A7%8B&amp;topic_id=28354051" target="_blank" class="news-link">暴雪逼疯坦克,大开摆运动开始</a>
                             </div>
@@ -1391,27 +1809,9 @@
                     <div class="news-item ">
                         <div class="news-number">5</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">18-26</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">贴吧</span><span class="rank-num ">18-26</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://tieba.baidu.com/hottopic/browse/hottopic?amp%3Btopic_name=%E5%A5%A5%E5%A7%94%E4%BC%9A%E7%BF%BB%E8%84%B8%2C%E7%94%B5%E7%AB%9E%E5%A5%A5%E8%BF%90%E5%87%89%E4%BA%86&amp;topic_id=28354025" target="_blank" class="news-link">奥委会翻脸,电竞奥运凉了</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="news-item ">
-                        <div class="news-number">6</div>
-                        <div class="news-content">
-                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">12-16</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
-                            </div>
-                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E8%B5%B0%E8%BF%91%E6%98%9F%E7%A9%B9%E4%B9%8B%E7%BB%AF%E8%8B%B1" target="_blank" class="news-link">走近星穹之绯英</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="news-item ">
-                        <div class="news-number">7</div>
-                        <div class="news-content">
-                            <div class="news-header"><span class="source-name">bilibili 热搜</span><span class="rank-num ">13-23</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
-                            </div>
-                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E9%94%90%E8%AF%84%E7%BB%9D%E5%8C%BA%E9%9B%B62.8%E5%90%84%E8%A7%92%E8%89%B2%E5%BC%BA%E5%BA%A6" target="_blank" class="news-link">锐评绝区零2.8各角色强度</a>
                             </div>
                         </div>
                     </div>
@@ -1427,7 +1827,7 @@
                     <div class="news-item ">
                         <div class="news-number">1</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num ">7</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num ">7</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://wallstreetcn.com/articles/3771617" target="_blank" class="news-link">A股大涨，成交破3.2万亿！科创50飙涨超5%，算力、存储芯片集体爆发，寒武纪、海光信息创新高</a>
                             </div>
@@ -1438,14 +1838,14 @@
                     <div class="word-header">
                         <div class="word-info">
                             <div class="word-name">科技巨头动态</div>
-                            <div class="word-count warm">6 条</div>
+                            <div class="word-count warm">7 条</div>
                         </div>
                         <div class="word-index"><span class="collapse-icon">▼</span>5/5</div>
                     </div>
                     <div class="news-item ">
                         <div class="news-number">1</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">澎湃新闻</span><span class="rank-num top">2</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">澎湃新闻</span><span class="rank-num top">2</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.thepaper.cn/newsDetail_forward_33102792" target="_blank" class="news-link">三星宣布在中国大陆市场停止销售含电视、显示器在内的所有家电产品</a>
                             </div>
@@ -1454,7 +1854,7 @@
                     <div class="news-item ">
                         <div class="news-number">2</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num high">5</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num high">5</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://wallstreetcn.com/articles/3771670" target="_blank" class="news-link">英伟达康宁签长期协议：康宁光学连接产能将提升10倍，英伟达获至多1800万股认购权</a>
                             </div>
@@ -1463,7 +1863,7 @@
                     <div class="news-item ">
                         <div class="news-number">3</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">澎湃新闻</span><span class="rank-num ">10-19</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">澎湃新闻</span><span class="rank-num ">10-19</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.thepaper.cn/newsDetail_forward_33103132" target="_blank" class="news-link">经纬度：全面客观看待“三星家电退出中国”</a>
                             </div>
@@ -1472,7 +1872,7 @@
                     <div class="news-item ">
                         <div class="news-number">4</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num top">2-3</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num top">2-3</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://www.cls.cn/detail/2364348" target="_blank" class="news-link">美股收盘：纳指、标普再创新高 AMD、康宁接力暴涨 中概股表现亮眼</a>
                             </div>
@@ -1481,16 +1881,25 @@
                     <div class="news-item ">
                         <div class="news-number">5</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num top">3</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                            <div class="news-header"><span class="source-name">华尔街见闻</span><span class="rank-num top">3</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                             </div>
                             <div class="news-title"><a href="https://wallstreetcn.com/articles/3771696" target="_blank" class="news-link">华尔街见闻早餐FM-Radio | 2026年5月7日</a>
                             </div>
                         </div>
                     </div>
-                    <div class="news-item ">
+                    <div class="news-item new">
                         <div class="news-number">6</div>
                         <div class="news-content">
-                            <div class="news-header"><span class="source-name">知乎</span><span class="rank-num ">16</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                            <div class="news-header"><span class="source-name">财联社热门</span><span class="rank-num ">13</span><span class="time-info">14:55</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.cls.cn/detail/2364555" target="_blank" class="news-link">AMD股价暴涨19%！华尔街密集上调目标价 代理式AI引爆CPU需求</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">7</div>
+                        <div class="news-content">
+                            <div class="news-header"><span class="source-name">知乎</span><span class="rank-num ">15-16</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                             </div>
                             <div class="news-title"><a href="https://www.zhihu.com/question/2035666551223866960" target="_blank" class="news-link">马斯克解散 xAI，并入 SpaceX 更名为 SpaceXAI，此举整合 AI 与航天，背后有哪些考量？</a>
                             </div>
@@ -1501,135 +1910,9 @@
                 <div class="section-divider rss-section">
                     <div class="rss-section-header">
                         <div class="rss-section-title">RSS 订阅更新</div>
-                        <div class="rss-section-count">126 条</div>
+                        <div class="rss-section-count">106 条</div>
                     </div>
                     <div class="rss-feeds-grid">
-                    <div class="feed-group">
-                        <div class="feed-header">
-                            <div class="feed-name">🔥 今日精选 Top 20</div>
-                            <div class="feed-count">20 条</div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.50</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/subagents-have-arrived-in-gemini-cli/" target="_blank" class="rss-link">子代理已登陆 Gemini CLI</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.50</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/bring-state-of-the-art-agentic-skills-to-the-edge-with-gemma-4/" target="_blank" class="rss-link">借助 Gemma 4 将最前沿的智能体技能部署至边缘设备</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/" target="_blank" class="rss-link">在谷歌 TPU 上大幅加速 LLM 推理：通过扩散式推测解码实现 3 倍速度提升</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/" target="_blank" class="rss-link">智能体 CLI 现已集成至智能体平台：一条命令行完成从创建到生产部署</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/production-ready-ai-agents-5-lessons-from-refactoring-a-monolith/" target="_blank" class="rss-link">生产级 AI 智能体：从单体重构中汲取的 5 条经验</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/build-better-ai-agents-5-developer-tips-from-the-agent-bake-off/" target="_blank" class="rss-link">构建更优 AI 智能体：智能体开发竞赛中的 5 条开发者建议</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/developers-guide-to-building-adk-agents-with-skills/" target="_blank" class="rss-link">开发者指南：如何为 ADK 智能体赋予技能</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/building-with-gemini-embedding-2/" target="_blank" class="rss-link">基于 Gemini Embedding 2 的开发实践：智能多模态 RAG 及更多应用</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/maxtext-expands-post-training-capabilities-introducing-sft-and-rl-on-single-host-tpus/" target="_blank" class="rss-link">MaxText 扩展后训练能力：在单主机 TPU 上引入 SFT 与强化学习</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/adk-go-10-arrives/" target="_blank" class="rss-link">ADK Go 1.0 正式发布！</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/announcing-adk-for-java-100-building-the-future-of-ai-agents-in-java/" target="_blank" class="rss-link">官宣 ADK for Java 1.0.0：用 Java 构建 AI 智能体的未来</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/closing-the-knowledge-gap-with-agent-skills/" target="_blank" class="rss-link">借助智能体技能弥合知识鸿沟</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/building-real-world-on-device-ai-with-litert-and-npu/" target="_blank" class="rss-link">利用 LiteRT 与 NPU 构建真实的端侧 AI 应用</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/torchtpu-running-pytorch-natively-on-tpus-at-google-scale/" target="_blank" class="rss-link">TorchTPU：在谷歌规模的 TPU 上原生运行 PyTorch</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/boost-training-goodput-how-continuous-checkpointing-optimizes-reliability-in-orbax-and-maxtext/" target="_blank" class="rss-link">提升训练效率：Orbax 与 MaxText 中持续检查点机制如何优化可靠性</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.05</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/speeding-up-ai-bringing-google-colossus-to-pytorch-via-gcsfs-and-rapid-bucket/" target="_blank" class="rss-link">加速 AI：通过 GCSFS 与 Rapid Bucket 将 Google Colossus 引入 PyTorch</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.05</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/new-enhancements-for-merchant-initiated-transactions-with-the-google-pay-api/" target="_blank" class="rss-link">Google Pay API 新增商户发起的交易增强功能</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 05:16</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-high">📊 T1 0.91</span>
-                            </div>
-                            <div class="rss-title"><a href="https://github.blog/ai-and-ml/generative-ai/validating-agentic-behavior-when-correct-isnt-deterministic/" target="_blank" class="rss-link">当“正确答案”不再确定时，如何验证智能体行为</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 0.90</span>
-                            </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/a2ui-v0-9-generative-ui/" target="_blank" class="rss-link">A2UI v0.9：可移植、无框架依赖的生成式 UI 新标准</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 18:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-high">📊 T2 0.80</span>
-                            </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/wAml9HDVF8HuaQEhFesM?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">京东 xLLM 的投机推理架构设计｜AICon 上海</a>
-                            </div>
-                        </div>
-                    </div>
                     <div class="feed-group">
                         <div class="feed-header">
                             <div class="feed-name">大语言模型</div>
@@ -1638,13 +1921,13 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/" target="_blank" class="rss-link">在谷歌 TPU 上大幅加速 LLM 推理：通过扩散式推测解码实现 3 倍速度提升</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/supercharging-llm-inference-on-google-tpus-achieving-3x-speedups-with-diffusion-style-speculative-decoding/" target="_blank" class="rss-link">在谷歌 TPU 上加速大模型推理：通过扩散式推测解码实现 3 倍提速</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/maxtext-expands-post-training-capabilities-introducing-sft-and-rl-on-single-host-tpus/" target="_blank" class="rss-link">MaxText 扩展后训练能力：在单主机 TPU 上引入 SFT 与强化学习</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/maxtext-expands-post-training-capabilities-introducing-sft-and-rl-on-single-host-tpus/" target="_blank" class="rss-link">MaxText 扩展后训练能力：在单主机 TPU 上引入 SFT 和 RL</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1662,17 +1945,17 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 03:06</span><span class="rss-author">Hugging Face Blog</span><span class="score-badge score-mid">📊 T1 0.64</span>
                             </div>
-                            <div class="rss-title"><a href="https://huggingface.co/blog/ServiceNow-AI/correctness-before-corrections" target="_blank" class="rss-link">vLLM V0 到 V1：在强化学习之前先确保正确性</a>
+                            <div class="rss-title"><a href="https://huggingface.co/blog/ServiceNow-AI/correctness-before-corrections" target="_blank" class="rss-link">vLLM V0 到 V1：强化学习中的正确性优先于修正</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 09:13</span><span class="rss-author">量子位</span><span class="score-badge score-mid">📊 T2 0.60</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 09:13</span><span class="rss-author">量子位</span><span class="score-badge score-mid">📊 T2 0.59</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/413569.html" target="_blank" class="rss-link">马斯克将 22 万张 GPU 全部出售给 Claude 使用：5 小时限额翻倍，双方合作建设太空算力</a>
+                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/413569.html" target="_blank" class="rss-link">马斯克 22 万张 GPU 全部卖给 Claude 使用：5 小时限额翻倍，双方合作建造太空算力</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 14:43</span><span class="rss-author">IT之家</span><span class="rss-author" style="color: #dc2626;">NEW</span><span class="score-badge score-mid">📊 T2 0.57</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 14:43</span><span class="rss-author">IT之家</span><span class="score-badge score-mid">📊 T2 0.57</span>
                             </div>
                             <div class="rss-title"><a href="https://www.ithome.com/0/947/204.htm" target="_blank" class="rss-link">谷歌为 Gemma 4 系列 AI 模型推出 MTP 起草器，推理速度最高提升 3 倍</a>
                             </div>
@@ -1680,11 +1963,11 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 11:46</span><span class="rss-author">Hacker News</span><span class="score-badge score-mid">📊 T2 0.50</span>
                             </div>
-                            <div class="rss-title"><a href="https://arxiv.org/abs/2605.03546" target="_blank" class="rss-link">ProgramBench：语言模型能否从零开始重建程序？</a>
+                            <div class="rss-title"><a href="https://arxiv.org/abs/2605.03546" target="_blank" class="rss-link">ProgramBench：语言模型能否从头重构程序？</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 02:13</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.49</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 02:13</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.48</span>
                             </div>
                             <div class="rss-title"><a href="https://www.freecodecamp.org/news/ai-paper-review-improving-language-understanding-by-generative-pre-training-gpt-1/" target="_blank" class="rss-link">AI 论文精读：通过生成式预训练提升语言理解能力（GPT-1）</a>
                             </div>
@@ -1702,7 +1985,7 @@
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 20:01</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.41</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 20:01</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.40</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/dWXdRNIyHKzd8TV9kctv?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">0% 准确率！图灵奖得主“石破天”：大模型写 SQL 远不够格，计算机科学不再是增长行业</a>
                             </div>
@@ -1710,13 +1993,13 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 17:24</span><span class="rss-author">量子位</span><span class="score-badge score-low">📊 T2 0.38</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/413264.html" target="_blank" class="rss-link">香蕉与 GPT Image 之外的第三条路：华人 15 人团队打造 AI 生图黑马</a>
+                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/413264.html" target="_blank" class="rss-link">香蕉和 GPT Image 之外的第三条路：华人 15 人团队造出 AI 生图黑马</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:22</span><span class="rss-author">量子位</span><span class="score-badge score-low">📊 T2 0.37</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/412995.html" target="_blank" class="rss-link">刚刚，ChatGPT 免费模型升级了：幻觉减半、记忆更强、回答更简洁</a>
+                            <div class="rss-title"><a href="https://www.qbitai.com/2026/05/412995.html" target="_blank" class="rss-link">刚刚，ChatGPT 免费模型升级：幻觉减半、记忆更强、回答更简洁</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1728,31 +2011,31 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">Apple Machine Learning Research</span><span class="score-badge score-low">📊 T1 0.34</span>
                             </div>
-                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/spatial" target="_blank" class="rss-link">从“物体所在”到“物体所用”：多模态大语言模型的空间功能智能基准测试</a>
+                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/spatial" target="_blank" class="rss-link">从物体位置到功能用途：多模态大语言模型的空间-功能智能基准测试</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">Apple Machine Learning Research</span><span class="score-badge score-low">📊 T1 0.32</span>
                             </div>
-                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/specmd-expert-prefetching" target="_blank" class="rss-link">SpecMD：关于推测性专家预取的综合研究</a>
+                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/specmd-expert-prefetching" target="_blank" class="rss-link">SpecMD：推测式专家预取的综合研究</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">Hugging Face Blog</span><span class="score-badge score-low">📊 T1 0.31</span>
                             </div>
-                            <div class="rss-title"><a href="https://huggingface.co/blog/open-asr-leaderboard-private-data" target="_blank" class="rss-link">在开源 ASR 排行榜中加入 Benchmaxxer 防护机制</a>
+                            <div class="rss-title"><a href="https://huggingface.co/blog/open-asr-leaderboard-private-data" target="_blank" class="rss-link">为开放 ASR 排行榜添加“基准作弊”防护</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">宝玉的分享</span><span class="score-badge score-low">📊 T2 0.29</span>
                             </div>
-                            <div class="rss-title"><a href="https://baoyu.io/blog/a-conversation-with-dario-amodei-daniela-amodei" target="_blank" class="rss-link">Anthropic 兄妹 Dario Amodei 与 Daniela Amodei 最新对话：Claude 为何一直限速？</a>
+                            <div class="rss-title"><a href="https://baoyu.io/blog/a-conversation-with-dario-amodei-daniela-amodei" target="_blank" class="rss-link">Anthropic 兄妹 Dario Amodei 和 Daniela Amodei 最新对话：Claude 为什么一直限速？</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 02:28</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://the-decoder.com/us-government-now-has-pre-release-access-to-ai-models-from-five-major-labs-for-national-security-testing/" target="_blank" class="rss-link">美国政府现已获得来自五大实验室的 AI 模型预发布访问权限，用于国家安全测试</a>
+                            <div class="rss-title"><a href="https://the-decoder.com/us-government-now-has-pre-release-access-to-ai-models-from-five-major-labs-for-national-security-testing/" target="_blank" class="rss-link">美国政府现可提前访问五家主要实验室的 AI 模型，用于国家安全测试</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1764,7 +2047,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">04-29 08:00</span><span class="rss-author">Apple Machine Learning Research</span><span class="score-badge score-low">📊 T1 0.04</span>
                             </div>
-                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/adaptive-thinking" target="_blank" class="rss-link">自适应思考：大型语言模型知道何时在潜在空间中进行思考</a>
+                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/adaptive-thinking" target="_blank" class="rss-link">自适应思考：大语言模型知道何时在隐空间中进行思考</a>
                             </div>
                         </div>
                     </div>
@@ -1776,37 +2059,37 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.50</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/subagents-have-arrived-in-gemini-cli/" target="_blank" class="rss-link">子代理已登陆 Gemini CLI</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/subagents-have-arrived-in-gemini-cli/" target="_blank" class="rss-link">Gemini CLI 现已支持子代理</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.50</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/bring-state-of-the-art-agentic-skills-to-the-edge-with-gemma-4/" target="_blank" class="rss-link">借助 Gemma 4 将最前沿的智能体技能部署至边缘设备</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/bring-state-of-the-art-agentic-skills-to-the-edge-with-gemma-4/" target="_blank" class="rss-link">借助 Gemma 4，将顶尖代理技能部署到边缘端</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/" target="_blank" class="rss-link">智能体 CLI 现已集成至智能体平台：一条命令行完成从创建到生产部署</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/agents-cli-in-agent-platform-create-to-production-in-one-cli/" target="_blank" class="rss-link">Agent Platform 中的 Agents CLI：通过单一命令行实现从创建到生产</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/production-ready-ai-agents-5-lessons-from-refactoring-a-monolith/" target="_blank" class="rss-link">生产级 AI 智能体：从单体重构中汲取的 5 条经验</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/production-ready-ai-agents-5-lessons-from-refactoring-a-monolith/" target="_blank" class="rss-link">企业级 AI 代理：从单体重构中学到的五个教训</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/build-better-ai-agents-5-developer-tips-from-the-agent-bake-off/" target="_blank" class="rss-link">构建更优 AI 智能体：智能体开发竞赛中的 5 条开发者建议</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/build-better-ai-agents-5-developer-tips-from-the-agent-bake-off/" target="_blank" class="rss-link">构建更优 AI 代理：来自代理编程大赛的五条开发者建议</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/developers-guide-to-building-adk-agents-with-skills/" target="_blank" class="rss-link">开发者指南：如何为 ADK 智能体赋予技能</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/developers-guide-to-building-adk-agents-with-skills/" target="_blank" class="rss-link">构建具备技能的 ADK 代理开发者指南</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1818,25 +2101,25 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/announcing-adk-for-java-100-building-the-future-of-ai-agents-in-java/" target="_blank" class="rss-link">官宣 ADK for Java 1.0.0：用 Java 构建 AI 智能体的未来</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/announcing-adk-for-java-100-building-the-future-of-ai-agents-in-java/" target="_blank" class="rss-link">宣布推出 ADK for Java 1.0.0：在 Java 中构建 AI 代理的未来</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/closing-the-knowledge-gap-with-agent-skills/" target="_blank" class="rss-link">借助智能体技能弥合知识鸿沟</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/closing-the-knowledge-gap-with-agent-skills/" target="_blank" class="rss-link">通过代理技能弥补知识差距</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 05:16</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-high">📊 T1 0.91</span>
                             </div>
-                            <div class="rss-title"><a href="https://github.blog/ai-and-ml/generative-ai/validating-agentic-behavior-when-correct-isnt-deterministic/" target="_blank" class="rss-link">当“正确答案”不再确定时，如何验证智能体行为</a>
+                            <div class="rss-title"><a href="https://github.blog/ai-and-ml/generative-ai/validating-agentic-behavior-when-correct-isnt-deterministic/" target="_blank" class="rss-link">在“正确”不确定时验证代理行为</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 23:58</span><span class="rss-author">Hacker News</span><span class="score-badge score-mid">📊 T2 0.52</span>
                             </div>
-                            <div class="rss-title"><a href="https://tilde.run/" target="_blank" class="rss-link">展示 HN：Tilde.run – 具备事务性、版本化文件系统的智能体沙箱</a>
+                            <div class="rss-title"><a href="https://tilde.run/" target="_blank" class="rss-link">Show HN：Tilde.run——具有事务性、版本化文件系统的代理沙箱</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1846,19 +2129,19 @@
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 00:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.46</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 00:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.45</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/D7iLJ0aKtBPgS3RCQlQr?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">OpenChoreo 1.0 将 AI 代理与 GitOps 引入 Kubernetes 开发平台</a>
+                            <div class="rss-title"><a href="https://www.infoq.cn/article/D7iLJ0aKtBPgS3RCQlQr?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">OpenChoreo 1.0 将 AI 代理和 GitOps 引入 Kubernetes 开发平台</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 18:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.44</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/G1OWuJNmI9slcpLWv5YR?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">从唤醒到陪伴：多模态智能体如何重构手机交互范式｜AICon 上海</a>
+                            <div class="rss-title"><a href="https://www.infoq.cn/article/G1OWuJNmI9slcpLWv5YR?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">从唤醒到陪伴：多模态 Agent 如何重构手机交互范式｜AICon 上海</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-05 21:55</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.25</span>
+                            <div class="rss-meta"><span class="rss-time">05-05 21:55</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.24</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/2D4Ky0AYKQu2JGeUW6HN?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Vercel 开源 Open Agents，支持后台运行 AI 编码工作流</a>
                             </div>
@@ -1872,19 +2155,19 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-01 08:00</span><span class="rss-author">Apple Machine Learning Research</span><span class="score-badge score-low">📊 T1 0.05</span>
                             </div>
-                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/reinforced-agent-inference-feedback" target="_blank" class="rss-link">增强型智能体：面向工具调用智能体的推理时反馈机制</a>
+                            <div class="rss-title"><a href="https://machinelearning.apple.com/research/reinforced-agent-inference-feedback" target="_blank" class="rss-link">强化代理：用于工具调用代理的推理时反馈</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-01 12:53</span><span class="rss-author">Latent Space</span><span class="score-badge score-low">📊 T2 0.05</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-agents-for-everything-else" target="_blank" class="rss-link">[AINews] 服务于一切的智能体：Codex 用于知识工作，Claude 用于创意工作</a>
+                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-agents-for-everything-else" target="_blank" class="rss-link">[AINews] 适用于一切场景的代理：Codex 用于知识工作，Claude 用于创意工作</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-02 15:21</span><span class="rss-author">Latent Space</span><span class="score-badge score-low">📊 T2 0.04</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-ai-engineer-worlds-fair-autoresearch" target="_blank" class="rss-link">[AINews] AI 工程师世界博览会——自动研究、记忆、世界模型、Token 最大化、智能体商务及垂直 AI 演讲者招募</a>
+                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-ai-engineer-worlds-fair-autoresearch" target="_blank" class="rss-link">[AINews] AI 工程师世界博览会——自主研究、记忆、世界模型、Token 最大化、代理式商务及垂直 AI 演讲者征集</a>
                             </div>
                         </div>
                     </div>
@@ -1896,7 +2179,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 16:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-high">📊 T2 0.80</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/ikCBSErsyohVBiZ0MbxR?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Cursor 删库毁了一家公司？资深开发者讲了句大实话：把数据库交给 AI 的那一刻，公司就已经没了</a>
+                            <div class="rss-title"><a href="https://www.infoq.cn/article/ikCBSErsyohVBiZ0MbxR?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Cursor 删库毁了一家公司？资深开发者讲了大实话：把数据库交给 AI 的那一刻，公司就已经没了</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1908,7 +2191,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 23:06</span><span class="rss-author">Hacker News</span><span class="score-badge score-mid">📊 T2 0.57</span>
                             </div>
-                            <div class="rss-title"><a href="https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/" target="_blank" class="rss-link">Vibe coding 与智能体工程之间的差距正在缩小</a>
+                            <div class="rss-title"><a href="https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/" target="_blank" class="rss-link">Vibe 编码和代理式工程正越来越接近，超出我的预期</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -1920,37 +2203,37 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 19:53</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.46</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/e40mGRhF9o583Yi3akyM?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">42% 的代码由 AI 编写，但 96% 的开发者不相信它：谁敢拍板说“上线”？这成了 2026 年最大挑战</a>
+                            <div class="rss-title"><a href="https://www.infoq.cn/article/e40mGRhF9o583Yi3akyM?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">42% 的代码是 AI 写的，可 96% 的开发者不信它：谁敢拍板说“上线”？这成了 2026 年最大挑战</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 18:37</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.45</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 18:37</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.44</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.infoq.cn/article/VkpOOYrXHY8Q2Ax6JE8N?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">CodeGuardian：一种用于 AI 代码质量分析与安全扫描的模型上下文协议服务器</a>
+                            <div class="rss-title"><a href="https://www.infoq.cn/article/VkpOOYrXHY8Q2Ax6JE8N?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">CodeGuardian：一种用于 AI 代码质量分析和安全扫描的模型上下文协议服务器</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 08:30</span><span class="rss-author">阿里云开发者</span><span class="score-badge score-low">📊 T2 0.38</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 08:30</span><span class="rss-author">阿里云开发者</span><span class="score-badge score-low">📊 T2 0.37</span>
                             </div>
                             <div class="rss-title"><a href="https://mp.weixin.qq.com/s?__biz=MzIzOTU0NTQ0MA==&amp;mid=2247559836&amp;idx=1&amp;sn=7fa79653cd7704d663ab7afc7a4b8eed" target="_blank" class="rss-link">一个文件让 AI 编码效率翻倍：AGENTS.md 实践指南</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-05 08:00</span><span class="rss-author">宝玉的分享</span><span class="score-badge score-low">📊 T2 0.19</span>
+                            <div class="rss-meta"><span class="rss-time">05-05 08:00</span><span class="rss-author">宝玉的分享</span><span class="score-badge score-low">📊 T2 0.18</span>
                             </div>
-                            <div class="rss-title"><a href="https://baoyu.io/blog/anthropics-boris-cherny-why-coding-is-solved-and-what-comes-next" target="_blank" class="rss-link">Boris Cherny：Claude Code 之后，写代码正在变成“管理智能体”</a>
+                            <div class="rss-title"><a href="https://baoyu.io/blog/anthropics-boris-cherny-why-coding-is-solved-and-what-comes-next" target="_blank" class="rss-link">Boris Cherny：Claude Code 之后，写代码正在变成“管理 Agent”</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-05 04:50</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.15</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-unblock-ai-pr-review-bottleneck-handbook/" target="_blank" class="rss-link">如何打破 AI PR 审查瓶颈：技术负责人构建代码库感知审查器的指南</a>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-unblock-ai-pr-review-bottleneck-handbook/" target="_blank" class="rss-link">如何打破 AI 代码审查瓶颈：技术主管构建代码库感知审查器的指南</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-01 00:09</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-low">📊 T1 0.07</span>
                             </div>
-                            <div class="rss-title"><a href="https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-for-beginners-interactive-v-non-interactive-mode/" target="_blank" class="rss-link">GitHub Copilot CLI 入门：交互模式与非交互模式</a>
+                            <div class="rss-title"><a href="https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-for-beginners-interactive-v-non-interactive-mode/" target="_blank" class="rss-link">GitHub Copilot CLI 初学者指南：交互式模式与非交互式模式</a>
                             </div>
                         </div>
                     </div>
@@ -1962,37 +2245,37 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 0.90</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/a2ui-v0-9-generative-ui/" target="_blank" class="rss-link">A2UI v0.9：可移植、无框架依赖的生成式 UI 新标准</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/a2ui-v0-9-generative-ui/" target="_blank" class="rss-link">A2UI v0.9：可移植、框架无关的生成式 UI 新标准</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-mid">📊 T1 0.56</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-mid">📊 T1 0.55</span>
                             </div>
-                            <div class="rss-title"><a href="https://openai.com/index/introducing-chatgpt-futures-class-of-2026" target="_blank" class="rss-link">推出 ChatGPT Futures：2026 届</a>
-                            </div>
-                        </div>
-                        <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.49</span>
-                            </div>
-                            <div class="rss-title"><a href="https://openai.com/index/singular-bank" target="_blank" class="rss-link">Singular Bank 助力银行家通过 ChatGPT 与 Codex 快速行动</a>
+                            <div class="rss-title"><a href="https://openai.com/index/introducing-chatgpt-futures-class-of-2026" target="_blank" class="rss-link">介绍 ChatGPT Futures：2026 届</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.49</span>
                             </div>
-                            <div class="rss-title"><a href="https://openai.com/index/uber" target="_blank" class="rss-link">Uber 利用 OpenAI 帮助用户更智能地赚钱、更快速地预订</a>
+                            <div class="rss-title"><a href="https://openai.com/index/singular-bank" target="_blank" class="rss-link">Singular Bank 借助 ChatGPT 和 Codex 帮助银行家快速行动</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 02:11</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.49</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.49</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-build-a-market-research-copilot-with-mcp-and-python-handbook/" target="_blank" class="rss-link">如何利用 MCP 与 Python 构建市场研究助手 [完整手册]</a>
+                            <div class="rss-title"><a href="https://openai.com/index/uber" target="_blank" class="rss-link">Uber 使用 OpenAI 帮助用户更智能地赚钱、更快地预订</a>
+                            </div>
+                        </div>
+                        <div class="rss-item">
+                            <div class="rss-meta"><span class="rss-time">05-07 02:11</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.48</span>
+                            </div>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-build-a-market-research-copilot-with-mcp-and-python-handbook/" target="_blank" class="rss-link">如何用 MCP 和 Python 构建市场研究副驾驶 [完整手册]</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 08:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.43</span>
                             </div>
-                            <div class="rss-title"><a href="https://openai.com/index/introducing-b2b-signals" target="_blank" class="rss-link">前沿企业如何建立 AI 优势</a>
+                            <div class="rss-title"><a href="https://openai.com/index/introducing-b2b-signals" target="_blank" class="rss-link">前沿企业如何构建 AI 优势</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2008,15 +2291,15 @@
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-05 05:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.23</span>
+                            <div class="rss-meta"><span class="rss-time">05-05 05:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.22</span>
                             </div>
-                            <div class="rss-title"><a href="https://openai.com/index/openai-pwc-finance-collaboration" target="_blank" class="rss-link">OpenAI 与普华永道合作，重新构想 CFO 办公室</a>
+                            <div class="rss-title"><a href="https://openai.com/index/openai-pwc-finance-collaboration" target="_blank" class="rss-link">OpenAI 与普华永道合作，重塑 CFO 办公室</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 01:14</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.19</span>
                             </div>
-                            <div class="rss-title"><a href="https://the-decoder.com/openais-first-hardware-play-might-be-a-phone-that-replaces-your-app-grid-with-an-agent-task-stream/" target="_blank" class="rss-link">OpenAI 的首个硬件产品可能是一款手机，用智能体任务流取代应用网格</a>
+                            <div class="rss-title"><a href="https://the-decoder.com/openais-first-hardware-play-might-be-a-phone-that-replaces-your-app-grid-with-an-agent-task-stream/" target="_blank" class="rss-link">OpenAI 的首个硬件产品可能是一款手机，用代理任务流取代应用网格</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2034,13 +2317,13 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.35</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/building-with-gemini-embedding-2/" target="_blank" class="rss-link">基于 Gemini Embedding 2 的开发实践：智能多模态 RAG 及更多应用</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/building-with-gemini-embedding-2/" target="_blank" class="rss-link">使用 Gemini Embedding 2 进行构建：代理式多模态 RAG 及其扩展应用</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/building-real-world-on-device-ai-with-litert-and-npu/" target="_blank" class="rss-link">利用 LiteRT 与 NPU 构建真实的端侧 AI 应用</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/building-real-world-on-device-ai-with-litert-and-npu/" target="_blank" class="rss-link">使用 LiteRT 和 NPU 构建真实的端侧 AI</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2052,7 +2335,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.20</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/boost-training-goodput-how-continuous-checkpointing-optimizes-reliability-in-orbax-and-maxtext/" target="_blank" class="rss-link">提升训练效率：Orbax 与 MaxText 中持续检查点机制如何优化可靠性</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/boost-training-goodput-how-continuous-checkpointing-optimizes-reliability-in-orbax-and-maxtext/" target="_blank" class="rss-link">提升训练效率：Orbax 和 MaxText 中持续检查点如何优化可靠性</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2070,19 +2353,19 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 03:13</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.41</span>
                             </div>
-                            <div class="rss-title"><a href="https://the-decoder.com/openai-built-a-networking-protocol-with-amd-broadcom-intel-microsoft-and-nvidia-to-fix-ai-supercomputer-bottlenecks/" target="_blank" class="rss-link">OpenAI 与 AMD、博通、英特尔、微软及英伟达共同构建网络协议，解决 AI 超级计算机瓶颈</a>
+                            <div class="rss-title"><a href="https://the-decoder.com/openai-built-a-networking-protocol-with-amd-broadcom-intel-microsoft-and-nvidia-to-fix-ai-supercomputer-bottlenecks/" target="_blank" class="rss-link">OpenAI 与 AMD、博通、英特尔、微软和英伟达共同构建网络协议，解决 AI 超级计算机瓶颈</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-05 18:00</span><span class="rss-author">OpenAI Blog</span><span class="score-badge score-low">📊 T1 0.37</span>
                             </div>
-                            <div class="rss-title"><a href="https://openai.com/index/mrc-supercomputer-networking" target="_blank" class="rss-link">利用 MRC（多路径可靠连接）解锁大规模 AI 训练网络</a>
+                            <div class="rss-title"><a href="https://openai.com/index/mrc-supercomputer-networking" target="_blank" class="rss-link">通过 MRC（多路径可靠连接）解锁大规模 AI 训练网络</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">04-28 21:02</span><span class="rss-author">Martin Fowler</span><span class="score-badge score-low">📊 T2 0.04</span>
                             </div>
-                            <div class="rss-title"><a href="https://martinfowler.com/articles/structured-prompt-driven/" target="_blank" class="rss-link">结构化提示驱动开发（SPDD）</a>
+                            <div class="rss-title"><a href="https://martinfowler.com/articles/structured-prompt-driven/" target="_blank" class="rss-link">结构提示驱动开发（SPDD）</a>
                             </div>
                         </div>
                     </div>
@@ -2092,7 +2375,7 @@
                             <div class="feed-count">4 条</div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 23:55</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.46</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 23:55</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.45</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/fdAdSjRh8TNNy6RMrjGm?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">“如果你不用更多 Token，就永远逃不出底层”：AI 竞赛开始变成资源战争</a>
                             </div>
@@ -2100,19 +2383,19 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 00:05</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.37</span>
                             </div>
-                            <div class="rss-title"><a href="https://the-decoder.com/google-speeds-up-gemma-4-threefold-with-multi-token-prediction/" target="_blank" class="rss-link">谷歌通过多 Token 预测将 Gemma 4 速度提升三倍</a>
+                            <div class="rss-title"><a href="https://the-decoder.com/google-speeds-up-gemma-4-threefold-with-multi-token-prediction/" target="_blank" class="rss-link">谷歌通过多 Token 预测将 Gemma 4 提速三倍</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 13:40</span><span class="rss-author">Latent Space</span><span class="score-badge score-low">📊 T2 0.29</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-silicon-valley-gets-serious" target="_blank" class="rss-link">[AINews] 硅谷开始认真对待服务业</a>
+                            <div class="rss-title"><a href="https://www.latent.space/p/ainews-silicon-valley-gets-serious" target="_blank" class="rss-link">[AINews] 硅谷开始认真对待服务</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 02:04</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.20</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 02:04</span><span class="rss-author">The Decoder: AI News</span><span class="score-badge score-low">📊 T2 0.19</span>
                             </div>
-                            <div class="rss-title"><a href="https://the-decoder.com/chatgpt-update-rolls-out-gpt-5-5-instant-with-fewer-hallucinations-and-more-personalized-answers/" target="_blank" class="rss-link">ChatGPT 更新推出 GPT-5.5 Instant，幻觉更少、回答更个性化</a>
+                            <div class="rss-title"><a href="https://the-decoder.com/chatgpt-update-rolls-out-gpt-5-5-instant-with-fewer-hallucinations-and-more-personalized-answers/" target="_blank" class="rss-link">ChatGPT 更新推出 GPT-5.5 Instant，幻觉减少、回答更个性化</a>
                             </div>
                         </div>
                     </div>
@@ -2124,7 +2407,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 23:44</span><span class="rss-author">Hacker News</span><span class="score-badge score-low">📊 T2 0.45</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license" target="_blank" class="rss-link">Valve 依据 Creative Commons 许可发布 Steam 手柄 CAD 文件</a>
+                            <div class="rss-title"><a href="https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license" target="_blank" class="rss-link">Valve 在知识共享许可下发布 Steam 手柄 CAD 文件</a>
                             </div>
                         </div>
                     </div>
@@ -2136,7 +2419,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.05</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/speeding-up-ai-bringing-google-colossus-to-pytorch-via-gcsfs-and-rapid-bucket/" target="_blank" class="rss-link">加速 AI：通过 GCSFS 与 Rapid Bucket 将 Google Colossus 引入 PyTorch</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/speeding-up-ai-bringing-google-colossus-to-pytorch-via-gcsfs-and-rapid-bucket/" target="_blank" class="rss-link">加速 AI：通过 GCSFS 和 Rapid Bucket 将 Google Colossus 引入 PyTorch</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2152,9 +2435,9 @@
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 01:00</span><span class="rss-author">Cloudflare Blog</span><span class="score-badge score-high">📊 T1 0.71</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 01:00</span><span class="rss-author">Cloudflare Blog</span><span class="score-badge score-high">📊 T1 0.70</span>
                             </div>
-                            <div class="rss-title"><a href="https://blog.cloudflare.com/de-tld-outage-dnssec/" target="_blank" class="rss-link">DNSSEC 出错时：我们如何应对 .de 顶级域名中断</a>
+                            <div class="rss-title"><a href="https://blog.cloudflare.com/de-tld-outage-dnssec/" target="_blank" class="rss-link">当 DNSSEC 出错时：我们如何应对 .de TLD 宕机</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2172,7 +2455,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 04:28</span><span class="rss-author">Hacker News</span><span class="score-badge score-mid">📊 T2 0.52</span>
                             </div>
-                            <div class="rss-title"><a href="https://github.com/olivier-ls/php-fts" target="_blank" class="rss-link">展示 HN：PHP-fts – 纯 PHP 实现、无需扩展的全文本搜索引擎</a>
+                            <div class="rss-title"><a href="https://github.com/olivier-ls/php-fts" target="_blank" class="rss-link">Show HN：PHP-fts——纯 PHP 全文搜索引擎，无需扩展</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2182,9 +2465,9 @@
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 06:06</span><span class="rss-author">Lex Fridman Podcast</span><span class="score-badge score-low">📊 T2 0.47</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 06:06</span><span class="rss-author">Lex Fridman Podcast</span><span class="score-badge score-low">📊 T2 0.46</span>
                             </div>
-                            <div class="rss-title"><a href="https://lexfridman.com/ffmpeg/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=ffmpeg" target="_blank" class="rss-link">#496 – FFmpeg：互联网视频背后不可思议的技术</a>
+                            <div class="rss-title"><a href="https://lexfridman.com/ffmpeg/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=ffmpeg" target="_blank" class="rss-link">#496 – FFmpeg：互联网视频背后的惊人技术</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2202,59 +2485,59 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 02:43</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.42</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/itcm-vs-dtcm-vs-ddr-embedded-memory-types-explained-handbook/" target="_blank" class="rss-link">ITCM 对比 DTCM 对比 DDR：嵌入式内存类型详解 [完整手册]</a>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/itcm-vs-dtcm-vs-ddr-embedded-memory-types-explained-handbook/" target="_blank" class="rss-link">ITCM vs DTCM vs DDR：嵌入式内存类型详解 [完整手册]</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 20:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.41</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 20:00</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.40</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/XRUpljAUlm9Kie805jqh?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Cloudflare 优化边缘栈：从大缓存转向高核并行</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-07 01:19</span><span class="rss-author">Hacker News</span><span class="score-badge score-low">📊 T2 0.41</span>
+                            <div class="rss-meta"><span class="rss-time">05-07 01:19</span><span class="rss-author">Hacker News</span><span class="score-badge score-low">📊 T2 0.40</span>
                             </div>
-                            <div class="rss-title"><a href="https://blog.val.town/better-auth" target="_blank" class="rss-link">从 Supabase 迁移到 Clerk 再到 Better Auth</a>
+                            <div class="rss-title"><a href="https://blog.val.town/better-auth" target="_blank" class="rss-link">从 Supabase 到 Clerk 再到 Better Auth</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-05 22:30</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-low">📊 T1 0.28</span>
                             </div>
-                            <div class="rss-title"><a href="https://github.blog/open-source/maintainers/welcome-to-maintainer-month-celebrating-the-people-behind-the-code/" target="_blank" class="rss-link">欢迎来到维护者月：致敬代码背后的奉献者</a>
+                            <div class="rss-title"><a href="https://github.blog/open-source/maintainers/welcome-to-maintainer-month-celebrating-the-people-behind-the-code/" target="_blank" class="rss-link">欢迎来到维护者月：庆祝代码背后的贡献者</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 03:23</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.25</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-build-a-scoped-note-taking-api-with-django-rest-framework-and-simplejwt/" target="_blank" class="rss-link">如何利用 Django Rest Framework 与 SimpleJWT 构建作用域笔记 API</a>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-build-a-scoped-note-taking-api-with-django-rest-framework-and-simplejwt/" target="_blank" class="rss-link">如何使用 Django Rest Framework 和 SimpleJWT 构建作用域笔记 API</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-05 08:00</span><span class="rss-author">Spring Blog</span><span class="score-badge score-low">📊 T1 0.25</span>
                             </div>
-                            <div class="rss-title"><a href="https://spring.io/blog/2026/05/05/this-week-in-spring-may-05-2026" target="_blank" class="rss-link">本周 Spring 动态 - 2026 年 5 月 5 日</a>
+                            <div class="rss-title"><a href="https://spring.io/blog/2026/05/05/this-week-in-spring-may-05-2026" target="_blank" class="rss-link">本周 Spring 资讯 - 2026 年 5 月 5 日</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-05 21:57</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.25</span>
+                            <div class="rss-meta"><span class="rss-time">05-05 21:57</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.24</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/LhzkgpOBi5mPkYHoKgE5?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Java 近期资讯：OpenJDK、Oracle 关键补丁更新、Open Liberty、Testcontainers、IntelliJ IDEA</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-05 21:53</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.25</span>
+                            <div class="rss-meta"><span class="rss-time">05-05 21:53</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.24</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/CVYo9mibdLfO0jmk8Swf?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">Uber 利用自动化代码转换，将 75000 多个测试类从 JUnit 4 迁移至 JUnit 5</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 02:26</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.25</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 02:26</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.24</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/the-complete-soc-2-type-ii-implementation-guide-for-engineers/" target="_blank" class="rss-link">面向工程师的完整 SOC 2 Type II 实施手册：逐月路线图与实战命令</a>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/the-complete-soc-2-type-ii-implementation-guide-for-engineers/" target="_blank" class="rss-link">工程师完整 SOC 2 Type II 实施手册：逐月路线图与真实命令</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 01:09</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.24</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 01:09</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.23</span>
                             </div>
                             <div class="rss-title"><a href="https://www.freecodecamp.org/news/mastering-the-javascript-event-loop/" target="_blank" class="rss-link">掌握 JavaScript 事件循环</a>
                             </div>
@@ -2262,7 +2545,7 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-06 00:51</span><span class="rss-author">freeCodeCamp</span><span class="score-badge score-low">📊 T2 0.23</span>
                             </div>
-                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-query-data-in-dynamodb-using-net/" target="_blank" class="rss-link">如何在 DynamoDB 中使用 .Net 查询数据</a>
+                            <div class="rss-title"><a href="https://www.freecodecamp.org/news/how-to-query-data-in-dynamodb-using-net/" target="_blank" class="rss-link">如何使用 .Net 在 DynamoDB 中查询数据</a>
                             </div>
                         </div>
                         <div class="rss-item">
@@ -2274,11 +2557,11 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-04 08:00</span><span class="rss-author">Spring Blog</span><span class="score-badge score-low">📊 T1 0.11</span>
                             </div>
-                            <div class="rss-title"><a href="https://spring.io/blog/2026/05/04/spring-office-hours-podcast-S5E14" target="_blank" class="rss-link">Spring Office Hours 播客：S5E14 - 与 Simon Martinelli 探讨规范驱动开发</a>
+                            <div class="rss-title"><a href="https://spring.io/blog/2026/05/04/spring-office-hours-podcast-S5E14" target="_blank" class="rss-link">Spring Office Hours 播客：S5E14 - Simon Martinelli 的规范驱动开发</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-04 23:00</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-low">📊 T1 0.10</span>
+                            <div class="rss-meta"><span class="rss-time">05-04 23:00</span><span class="rss-author">The GitHub Blog</span><span class="score-badge score-low">📊 T1 0.09</span>
                             </div>
                             <div class="rss-title"><a href="https://github.blog/open-source/register-now-for-openclaw-after-hours-github/" target="_blank" class="rss-link">立即注册 OpenClaw：After Hours @ GitHub</a>
                             </div>
@@ -2298,23 +2581,23 @@
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 1.05</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/new-enhancements-for-merchant-initiated-transactions-with-the-google-pay-api/" target="_blank" class="rss-link">Google Pay API 新增商户发起的交易增强功能</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/new-enhancements-for-merchant-initiated-transactions-with-the-google-pay-api/" target="_blank" class="rss-link">Google Pay API 商家发起交易的新增强功能</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-author">Google Developers Blog</span><span class="score-badge score-high">📊 T1 0.75</span>
                             </div>
-                            <div class="rss-title"><a href="https://developers.googleblog.com/get-ready-for-google-io-livestream-schedule-revealed/" target="_blank" class="rss-link">为 Google I/O 做好准备：直播日程揭晓</a>
+                            <div class="rss-title"><a href="https://developers.googleblog.com/get-ready-for-google-io-livestream-schedule-revealed/" target="_blank" class="rss-link">为 Google I/O 做好准备：直播日程公布</a>
                             </div>
                         </div>
                         <div class="rss-item">
                             <div class="rss-meta"><span class="rss-time">05-07 01:59</span><span class="rss-author">Hacker News</span><span class="score-badge score-low">📊 T2 0.48</span>
                             </div>
-                            <div class="rss-title"><a href="https://cloud.google.com/blog/products/identity-security/introducing-google-cloud-fraud-defense-the-next-evolution-of-recaptcha/" target="_blank" class="rss-link">Google Cloud 欺诈防御，reCAPTCHA 的下一次进化</a>
+                            <div class="rss-title"><a href="https://cloud.google.com/blog/products/identity-security/introducing-google-cloud-fraud-defense-the-next-evolution-of-recaptcha/" target="_blank" class="rss-link">Google Cloud 欺诈防御：reCAPTCHA 的下一次演进</a>
                             </div>
                         </div>
                         <div class="rss-item">
-                            <div class="rss-meta"><span class="rss-time">05-06 22:35</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.38</span>
+                            <div class="rss-meta"><span class="rss-time">05-06 22:35</span><span class="rss-author">InfoQ中文</span><span class="score-badge score-low">📊 T2 0.37</span>
                             </div>
                             <div class="rss-title"><a href="https://www.infoq.cn/article/934Tdhvr1m38VmMppL2R?utm_source=rss&amp;utm_medium=article" target="_blank" class="rss-link">阿里高绩效员工年终奖上浮 1-2 个月；追觅 CEO 要求所有员工开通社交账号，每天发三条视频；马斯克去年在特斯拉挣了 0 美元｜AI 周报</a>
                             </div>
@@ -2341,7 +2624,7 @@
                         <div class="news-item">
                             <div class="news-number">1</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">1</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num top">1</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035524771035792318" target="_blank" class="news-link">如何看待「耿同学讲故事」再举报中山大学副院长邝栋明论文造假？</a>
                                 </div>
@@ -2350,7 +2633,7 @@
                         <div class="news-item">
                             <div class="news-number">2</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">2-4</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num top">2-4</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035663486911345735" target="_blank" class="news-link">央视硬刚国际足联拒绝天价世界杯转播合同，中国这次到底在争什么？</a>
                                 </div>
@@ -2359,7 +2642,7 @@
                         <div class="news-item">
                             <div class="news-number">3</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">2-4</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num top">2-4</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/21386973" target="_blank" class="news-link">为什么中国人对玉石情有独钟，而欧美人兴趣不浓？</a>
                                 </div>
@@ -2368,7 +2651,7 @@
                         <div class="news-item">
                             <div class="news-number">4</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">3-4</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num top">3-4</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035375161361307626" target="_blank" class="news-link">如何看待有博主直播比亚迪闪充，磷酸铁锂电池单体电芯最高温达到 76℃？</a>
                                 </div>
@@ -2377,7 +2660,7 @@
                         <div class="news-item">
                             <div class="news-number">5</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">5</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num high">5</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035416713131288430" target="_blank" class="news-link">5 月 6 日国际油价大跌，受哪些因素影响？此轮下跌可能持续多久？</a>
                                 </div>
@@ -2386,25 +2669,25 @@
                         <div class="news-item">
                             <div class="news-number">6</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">6-9</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
-                                </div>
-                                <div class="news-title"><a href="https://www.zhihu.com/question/2033240581208589459" target="_blank" class="news-link">成都多家茶楼疑似遭职业打假人举报「无证泡茶」，行业协会称将联合报警，这种举报能成立吗？</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-number">7</div>
-                            <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">7-10</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num high">6-10</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035665322670122024" target="_blank" class="news-link">追觅俞浩建议年轻人别炒股，45 岁之后才应考虑「钱生钱」的事，他说的有道理吗？</a>
                                 </div>
                             </div>
                         </div>
                         <div class="news-item">
+                            <div class="news-number">7</div>
+                            <div class="news-content">
+                                <div class="news-header"><span class="rank-num high">6-9</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
+                                </div>
+                                <div class="news-title"><a href="https://www.zhihu.com/question/2033240581208589459" target="_blank" class="news-link">成都多家茶楼疑似遭职业打假人举报「无证泡茶」，行业协会称将联合报警，这种举报能成立吗？</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news-item">
                             <div class="news-number">8</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">8-13</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">8-13</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035387121423364410" target="_blank" class="news-link">中方回应二战后日本首次境外发射进攻型导弹，敦促日本在军事安全领域恪守承诺、谨言慎行，如何看待日本此举？</a>
                                 </div>
@@ -2413,7 +2696,7 @@
                         <div class="news-item">
                             <div class="news-number">9</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">9-12</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num high">8-12</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035480301774664656" target="_blank" class="news-link">网友曝三亚 4 只皮皮虾收费 1035 元远超市场价，店家回应称「明码标价」，这定价合规吗？算宰客吗？</a>
                                 </div>
@@ -2422,7 +2705,7 @@
                         <div class="news-item">
                             <div class="news-number">10</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">5-10</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">5-10</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/666231870" target="_blank" class="news-link">西班牙率先暴富并拥有了几乎整个美洲，为何最后却远远落后于当初远不如自己的英法德？</a>
                                 </div>
@@ -2431,7 +2714,7 @@
                         <div class="news-item">
                             <div class="news-number">11</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">6-11</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">6-11</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035488793264747701" target="_blank" class="news-link">美以袭击伊朗进入第 69 天，当前局势如何？哪些信息值得关注？</a>
                                 </div>
@@ -2440,7 +2723,7 @@
                         <div class="news-item">
                             <div class="news-number">12</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">2-12</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num top">2-12</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035415081798869913" target="_blank" class="news-link">如何看待蔡浩宇的硅谷 AI 公司战略转向，LLM 团队整体回流国内？</a>
                                 </div>
@@ -2449,7 +2732,7 @@
                         <div class="news-item">
                             <div class="news-number">13</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">13</span><span class="time-info">14:34~14:42</span><span class="count-info">2次</span>
+                                <div class="news-header"><span class="rank-num ">13</span><span class="time-info">14:34~14:55</span><span class="count-info">3次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035452981315724157" target="_blank" class="news-link">世乒赛 1/8 决赛，中国女乒 3-0 瑞典，如何评价本场比赛？</a>
                                 </div>
@@ -2458,7 +2741,7 @@
                         <div class="news-item">
                             <div class="news-number">14</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">14</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num ">14</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2032102933781856883" target="_blank" class="news-link">11 岁孩子回家后发现妈妈晕倒，大哭中冷静拨打爸爸和急救电话并说明情况，如何看孩子这一教科书式的反应？</a>
                                 </div>
@@ -2467,25 +2750,25 @@
                         <div class="news-item">
                             <div class="news-number">15</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">15</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
-                                </div>
-                                <div class="news-title"><a href="https://www.zhihu.com/question/2011030090205636299" target="_blank" class="news-link">为什么 F15 和 F16 的寿命远远超过苏 27 和米 29？</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <div class="news-number">16</div>
-                            <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">16</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num ">15-16</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035666551223866960" target="_blank" class="news-link">马斯克解散 xAI，并入 SpaceX 更名为 SpaceXAI，此举整合 AI 与航天，背后有哪些考量？</a>
                                 </div>
                             </div>
                         </div>
                         <div class="news-item">
+                            <div class="news-number">16</div>
+                            <div class="news-content">
+                                <div class="news-header"><span class="rank-num ">15-16</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
+                                </div>
+                                <div class="news-title"><a href="https://www.zhihu.com/question/2011030090205636299" target="_blank" class="news-link">为什么 F15 和 F16 的寿命远远超过苏 27 和米 29？</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news-item">
                             <div class="news-number">17</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">17</span><span class="time-info">14:34~14:42</span><span class="count-info">2次</span>
+                                <div class="news-header"><span class="rank-num ">17</span><span class="time-info">14:34~14:55</span><span class="count-info">3次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035676499647447146" target="_blank" class="news-link">国际足联秘书长级高管计划访华，世界杯版权谈判会迎来转机吗？此前报价高达 21 亿元，定价逻辑是什么？</a>
                                 </div>
@@ -2494,7 +2777,7 @@
                         <div class="news-item">
                             <div class="news-number">18</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">17-18</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num ">17-18</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2035658141761789954" target="_blank" class="news-link">2526 赛季 NBA 季后赛森林狼 95:133 马刺，如何评价这场比赛？</a>
                                 </div>
@@ -2503,7 +2786,7 @@
                         <div class="news-item">
                             <div class="news-number">19</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">14-19</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num ">14-19</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/2028883532005525054" target="_blank" class="news-link">如何理解雷军说不建议有司机的大老板买小米，这是反向宣传还是真诚建议？</a>
                                 </div>
@@ -2512,7 +2795,7 @@
                         <div class="news-item">
                             <div class="news-number">20</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num ">20</span><span class="time-info">14:34~14:42</span><span class="count-info">2次</span>
+                                <div class="news-header"><span class="rank-num ">20</span><span class="time-info">14:34~14:55</span><span class="count-info">3次</span>
                                 </div>
                                 <div class="news-title"><a href="https://www.zhihu.com/question/452782047" target="_blank" class="news-link">《生活大爆炸》为什么谢尔顿（Sheldon）很少嘲讽拉吉（Raj）的学术水平和智商？</a>
                                 </div>
@@ -2527,7 +2810,7 @@
                         <div class="news-item">
                             <div class="news-number">1</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">1</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num top">1</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771614" target="_blank" class="news-link">美伊和谈预期升温，欧美股市大涨，标普纳指再新高，中概股指跑赢大盘，原油重挫，黄金大涨</a>
                                 </div>
@@ -2536,7 +2819,7 @@
                         <div class="news-item">
                             <div class="news-number">2</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">2</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num top">2</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771656" target="_blank" class="news-link">报道：美伊接近达成停战备忘录，核谈判关键条款出现松动</a>
                                 </div>
@@ -2545,7 +2828,7 @@
                         <div class="news-item">
                             <div class="news-number">3</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num top">3</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num top">3</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771696" target="_blank" class="news-link">华尔街见闻早餐FM-Radio | 2026年5月7日</a>
                                 </div>
@@ -2554,7 +2837,7 @@
                         <div class="news-item">
                             <div class="news-number">4</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">4-6</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">4-6</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771628" target="_blank" class="news-link">王毅同阿拉格齐会谈！中方：全面止战刻不容缓，重启战端更不可取，坚持谈判尤为重要</a>
                                 </div>
@@ -2563,7 +2846,7 @@
                         <div class="news-item">
                             <div class="news-number">5</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">5</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">5</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771670" target="_blank" class="news-link">英伟达康宁签长期协议：康宁光学连接产能将提升10倍，英伟达获至多1800万股认购权</a>
                                 </div>
@@ -2572,7 +2855,7 @@
                         <div class="news-item">
                             <div class="news-number">6</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">4-6</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">4-6</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771664" target="_blank" class="news-link">伊朗称将确保船只安全通过霍尔木兹海峡</a>
                                 </div>
@@ -2581,7 +2864,7 @@
                         <div class="news-item">
                             <div class="news-number">7</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">7</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">7</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771617" target="_blank" class="news-link">A股大涨，成交破3.2万亿！科创50飙涨超5%，算力、存储芯片集体爆发，寒武纪、海光信息创新高</a>
                                 </div>
@@ -2590,7 +2873,7 @@
                         <div class="news-item">
                             <div class="news-number">8</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">8</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">8</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771674" target="_blank" class="news-link">伊朗高层回击美媒：所谓的“和谈进展”只是美国的愿望清单，而非现实</a>
                                 </div>
@@ -2599,7 +2882,7 @@
                         <div class="news-item">
                             <div class="news-number">9</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">9</span><span class="time-info">14:16~14:42</span><span class="count-info">3次</span>
+                                <div class="news-header"><span class="rank-num high">9</span><span class="time-info">14:16~14:55</span><span class="count-info">4次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771687" target="_blank" class="news-link">特朗普称美伊“很可能”达成协议、威胁谈不成更强力轰炸，伊朗指美报道失实、称还在审阅美方提案</a>
                                 </div>
@@ -2608,7 +2891,7 @@
                         <div class="news-item">
                             <div class="news-number">10</div>
                             <div class="news-content">
-                                <div class="news-header"><span class="rank-num high">10</span><span class="time-info">10:31~14:42</span><span class="count-info">4次</span>
+                                <div class="news-header"><span class="rank-num high">10</span><span class="time-info">10:31~14:55</span><span class="count-info">5次</span>
                                 </div>
                                 <div class="news-title"><a href="https://wallstreetcn.com/articles/3771667" target="_blank" class="news-link">国产大模型开启融资热：DeepSeek被曝投后估值或达450亿美元</a>
                                 </div>
@@ -2625,23 +2908,23 @@
                     <div class="ai-blocks-grid">
                     <div class="ai-block">
                         <div class="ai-block-title">核心热点态势</div>
-                        <div class="ai-block-content">全网霸屏两大叙事交织：地缘缓和引发全球风险资产狂欢，AI军备竞赛催生新一轮资本赌注。宏观层面，美伊和谈预期推动美股、黄金、原油剧烈波动，A股受此带动成交破3.2万亿，科创50飙涨超5%。产业层面，英伟达与康宁锁定光学连接产能的长期协议，同步曝出Anthropic包下SpaceX Colossus 1、DeepSeek估值或达450亿美元，AI基建从算力竞争延伸到光互联领域。<br><br>【宏观主线】<br>两大叙事交织：<br>1. 地缘风险定价逆转——美伊和谈预期推升全球风险偏好，同时伊朗高层不断否认进展，造成市场波动加剧；<br><br>2. AI军备竞赛持续——从大模型融资热到算力租赁协议，资本正加速向基础设施层集中。<br><br>【微观领域】<br>1. 科技巨头边界模糊：马斯克解散xAI并入SpaceX，英伟达签下康宁大单，巨头们正从纯软件或硬件向‘算力-连接-硬件’一体化平台转型；<br><br>2. 三星家电撤出中国，与A股半导体暴力拉升形成对比，反映全球半导体产业链的再配置正在加速。</div>
+                        <div class="ai-block-content">今日热点呈现「破圈扩散」态势，核心叙事由两大宏观主线交织主导。<br><br>【宏观主线】<br>一、AI与算力资本化进入爆发期。以DeepSeek估值450亿美元为标志的国产大模型融资热，叠加国际巨头Anthropic包下算力、英伟达与康宁供应链绑定、AMD因CPU需求股价暴涨，共同指向AI基础设施已成为全球资本核心战场。主线二、地缘与宏观风险对冲。美伊和谈预期升温推动欧美股市新高与油价重挫，而三星全面退出中国家电市场则标志着全球供应链与消费格局的局部重构。<br><br>【微观领域】<br>1. 游戏产业分化明显：国产游戏「异环」横扫日本体现文化输出加速，而暴雪与电竞奥运遇冷则反映海外大厂与体育官方机构的信任危机。<br><br>2. A股科技牛市与消费电子退潮并存：科创50大涨超5%与三星退华形成鲜明对比，预示资金正从传统消费电子向硬科技与自主可控主线迁移。</div>
                     </div>
                     <div class="ai-block">
                         <div class="ai-block-title">舆论风向争议</div>
-                        <div class="ai-block-content">【情绪光谱】<br>主流情绪转向‘乐观但谨慎’：华尔街见闻与财联社密集报道美伊和谈进展，但伊朗高层不断出面‘辟谣’；A股投资者狂欢追涨，知乎上却涌现‘为什么中国人对玉石情有独钟’等闲聊话题，折射出交易盘与叙事盘的割裂。<br><br>【核心矛盾】<br>1. 地缘和谈的真假之争：美媒放利好，伊朗官方否认，市场选择相信前者，但风险仍在；<br><br>2. AI估值泡沫的认知之争：DeepSeek 450亿估值与蔡浩宇团队回流国内同时发生，被视为‘国产大模型热’还是‘人才回流避险’引发争议。</div>
+                        <div class="ai-block-content">【情绪光谱】<br>主流情绪为典型的「科技乐观主义」——算力与AI融资话题在全网获得一致追捧，华尔街和中概股看多声浪高涨。潜流暗涌则集中在三星退华引发的民族情绪与行业危机感，以及蔡浩宇团队回流背后的人才竞争叙事。<br><br>【核心矛盾】<br>1. AI商业化速度与泡沫风险之争：DeepSeek高估值和Anthropic营收暴增被市场化解读，但知乎关于AI人才回流的讨论显示业内对「脱钩风险」和「烧钱换增长」可持续性的深层忧虑。<br><br>2. 和谈预期vs现实外交：华尔街见闻与伊朗官方对和谈进展的口径严重对立，构成典型信息战。</div>
                     </div>
                     <div class="ai-block">
                         <div class="ai-block-title">异动与弱信号</div>
-                        <div class="ai-block-content">【跨平台共振/温差】<br>美伊和谈预期在华尔街见闻、财联社和知乎同步发酵，形成‘资讯-投资-话题’链，属于典型的破圈扩散。但三星家电退出中国在澎湃和微博热而不在知乎冷，说明该话题在投资圈外仍属‘圈层热点’。<br><br>【轨迹突变】<br>知乎上‘如何看待蔡浩宇的硅谷 AI 公司战略转向’从第2急降至第12，呈现明显衰退态势，说明该话题热度已高峰回落。而‘央视硬刚国际足联’从第4升至第2，呈现急升态势，反映世界杯版权谈判引发公共情绪。<br><br>【弱信号捕捉】<br>Anthropic包下Colossus 1全部容量（财联社），但该条新闻在热榜排名仅4-5且无增长轨迹，暗示市场尚未充分认知‘算力被预包’对中小企业的影响。</div>
+                        <div class="ai-block-content">【跨平台温差】<br>「GTA6营销开启」在B站冲上第10但未进入其他平台热搜，属于典型的「游戏圈层自嗨」，尚未破圈。与之相反，「三星退华」在澎湃新闻（第2）和微博等舆论场引发恐慌，但在知乎作为独立话题被忽视，暗示该事件在深度讨论场缺乏增量信息。<br><br>【轨迹突变】<br>知乎「蔡浩宇团队回流」话题轨迹从排名2急降至12，属于典型「高开低走」，说明该事件初因硅谷明星回归引发关注，但后续缺乏新爆料导致热度快速流失。<br><br>【弱信号捕捉】<br>「AMD股价暴涨19%」仅1次上榜但随后被吸收进资本叙事，结合「康宁产能提升10倍」，表明光电互联正成为继GPU后的下一个算力供应链瓶颈，市场尚未充分定价。</div>
                     </div>
                     <div class="ai-block">
                         <div class="ai-block-title">研判策略建议</div>
-                        <div class="ai-block-content">1. 投资者：警惕美伊和谈‘买预期卖事实’——若伊朗官方持续否认，原油可能快速回补，A股半导体与跨境电商板块短期有回调风险；关注光互联（康宁、中际旭创、天孚通信）和算力租赁（中贝通信、光环新网）等细分赛道。<br><br>2. 品牌方：三星家电退出中国的窗口期，是国产品牌（海尔、美的）冲击中高端市场的良机，但需警惕供应链短期波动；游戏厂商应关注GTA6营销启动窗口（B站热议），考虑联合推广。<br><br>3. 公众：警惕职业打假人‘无证泡茶’投诉扩散（知乎热点），餐饮及休闲商户应主动自查许可证和经营范围；世界杯版权谈判若破裂，CCTV可能失去转播权，直接影响观赛体验。</div>
+                        <div class="ai-block-content">1. 投资者：警惕「美伊和谈」预期反复引发的能源与风险资产波动，关注「英伟达-康宁」及「AMD代理式AI」两条供应链新方向，优先配置「光电互联」与「CPU算力」标的。<br><br>2. 品牌方：三星退华敲响「本土化深度」警钟，消费电子品牌需加速研发与渠道自主可控转型，避免沦为地缘政治弃子。<br><br>3. 公众：避免盲目追高AI估值故事，关注行业共识向「商业化落地」与「人才回流」的真实压力，警惕舆论场单向度乐观。</div>
                     </div>
                     <div class="ai-block">
                         <div class="ai-block-title">独立源点速览</div>
-                        <div class="ai-block-content">[知乎]:<br>知乎热榜以学术打假（耿同学举报论文造假，第1高位横盘）、国际政治（央视硬刚国际足联，从第4急升至第2）和民生热点（成都茶楼被举报、追觅俞浩建议别炒股）为主。地缘话题（中方回应日本导弹、美以袭伊朗第69天）排名稳定在中低位。AI人才回流话题（蔡浩宇团队回国）从第2持续下滑至第12，热度明显衰退。雷军反向营销、西班牙兴衰史等讨论圈在10-20区间。<br><br>[华尔街见闻]:<br>华尔街见闻整体被美伊和谈预期主导，头三条均是最新进展，且排名稳定（第1至第3恒定高位）。王毅会谈话题从第6升至第4，反映外交层面信号被市场逐步认可。英伟达康宁协议（第5恒定）、DeepSeek估值（第10恒定）维持稳定热度。A股成交破3.2万亿（第7恒定）与市场情绪吻合。整体呈现多议题并行但无剧烈波动的特征。</div>
+                        <div class="ai-block-content">[知乎]:<br>知乎热榜呈现「社会议题集中爆发」特征，学术打假（「耿同学再举报」排名1高位横盘）与版权争议（央视拒天价转播合同排名2-4）主导。蔡浩宇团队回流话题从2急降至12，暗示早期热度被现实叙事取代。国际议题如美以袭击伊朗（排名11稳定）与日本部署导弹（排名9稳定）形成长尾关注。本土消费纠纷（三亚皮皮虾事件排名8升温）与职业打假（茶楼举报排名6稳定）反映监管文化冲突。<br><br>[华尔街见闻]:<br>华尔街见闻全天被「美伊停战预期」单主线垄断——前9位中7条与此相关，且排名恒稳未变（轨迹无波动），显示该话题已形成强共识框架。唯一的非地缘热点是「DeepSeek估值450亿美元」排名10稳定，符合算力融资叙事主线。A股科技飙涨（排名7）与油市重挫（非排名但贯穿副线）共同构成风险资产重新定价图景。整体信息密度极高，但缺乏增量信号。</div>
                     </div>
                     </div>
                 </div>

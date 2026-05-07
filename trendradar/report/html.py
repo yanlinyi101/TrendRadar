@@ -9,6 +9,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Callable
 
 from trendradar.report.helpers import html_escape
+from trendradar.report.formatter import format_score_label, score_color_class
 from trendradar.utils.time import convert_time_for_display
 from trendradar.ai.formatter import render_ai_analysis_html_rich
 
@@ -1598,13 +1599,13 @@ def render_html_content(
                 if count_info > 1:
                     stats_html += f'<span class="count-info">{count_info}次</span>'
 
-                # final_score 徽标（Phase 1+2+4）
+                # final_score 徽标（Phase 1+2+4，百分制）
                 if "final_score" in title_data:
                     try:
                         _fs = float(title_data.get("final_score") or 0.0)
                         _tier = str(title_data.get("tier") or "").strip()
-                        _label = f"{_tier} {_fs:.2f}" if _tier else f"{_fs:.2f}"
-                        _cls = "score-high" if _fs >= 0.7 else ("score-mid" if _fs >= 0.5 else "score-low")
+                        _label = format_score_label(_fs, _tier)
+                        _cls = score_color_class(_fs)
                         stats_html += f'<span class="score-badge {_cls}">📊 {html_escape(_label)}</span>'
                     except (ValueError, TypeError):
                         pass
@@ -1786,13 +1787,13 @@ def render_html_content(
                 if is_new:
                     rss_html += '<span class="rss-author" style="color: #dc2626;">NEW</span>'
 
-                # final_score 徽标（Phase 1+2+4）
+                # final_score 徽标（Phase 1+2+4，百分制）
                 if "final_score" in title_data:
                     try:
                         _fs = float(title_data.get("final_score") or 0.0)
                         _tier = str(title_data.get("tier") or "").strip()
-                        _label = f"{_tier} {_fs:.2f}" if _tier else f"{_fs:.2f}"
-                        _cls = "score-high" if _fs >= 0.7 else ("score-mid" if _fs >= 0.5 else "score-low")
+                        _label = format_score_label(_fs, _tier)
+                        _cls = score_color_class(_fs)
                         rss_html += f'<span class="score-badge {_cls}">📊 {html_escape(_label)}</span>'
                     except (ValueError, TypeError):
                         pass
@@ -2153,8 +2154,8 @@ def render_html_content(
                 except (ValueError, TypeError):
                     fs = 0.0
                 tier = str(item.get("tier") or "").strip()
-                score_label = f"{tier} {fs:.2f}" if tier else f"{fs:.2f}"
-                score_cls = "score-high" if fs >= 0.7 else ("score-mid" if fs >= 0.5 else "score-low")
+                score_label = format_score_label(fs, tier)
+                score_cls = score_color_class(fs)
 
                 title = html_escape(item.get("title", ""))
                 url = item.get("mobile_url") or item.get("url") or ""

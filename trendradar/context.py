@@ -1155,6 +1155,11 @@ class AppContext:
                     "relevance_score": score,
                     "freshness_decay": decay,
                     "final_score": final_score,
+                    # 保留原始时间戳（HTML featured 区时间轴需要）
+                    "first_time": first_time,
+                    "last_time": last_time,
+                    "source_id": item.get("source_id", ""),
+                    "source_type": source_type,
                 }
 
                 if source_type == "rss":

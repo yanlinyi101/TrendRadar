@@ -10,14 +10,47 @@ from typing import Dict
 from trendradar.report.helpers import clean_title, html_escape, format_rank_display
 
 
+def format_score_label(score: float, tier: str = "") -> str:
+    """统一的分数百分制显示（评分公式不变，仅展示乘 100 取整）
+
+    final_score 内部范围 0~1.5（=ai_relevance × tier_weight × decay）。
+    展示用百分制更直观，例：0.78 → 78；1.50 → 150（T1 满分新闻）。
+    带 tier 时形如 "T1 78"；不带形如 "78"。
+    """
+    try:
+        pct = round(float(score) * 100)
+    except (ValueError, TypeError):
+        pct = 0
+    if tier:
+        return f"{tier} {pct}"
+    return str(pct)
+
+
+def score_color_class(score: float) -> str:
+    """score → CSS / 颜色档位（高/中/低）
+
+    阈值仍按 final_score 原始范围（≥0.7=高、≥0.5=中、其余低），与 v2.0 行为一致。
+    切到百分制只是显示形式，分级阈值不变。
+    """
+    try:
+        s = float(score)
+    except (ValueError, TypeError):
+        s = 0.0
+    if s >= 0.7:
+        return "score-high"
+    if s >= 0.5:
+        return "score-mid"
+    return "score-low"
+
+
 def _build_score_badge(platform: str, title_data: Dict) -> str:
     """构造 final_score 徽标（行尾追加），仅当 title_data 含 final_score 时返回内容
 
     Phase 1+2+4 把 tier × decay × ai_relevance 算成 final_score 写入 title_data。
     展示时让分数显示在标题行末，方便用户一眼判断这条新闻的综合"含金量"。
 
-    样式（按平台特性）：
-      [T1 0.85]  ← 高分（≥0.7）红色 / [T1 0.62] ← 中等（0.5-0.7）橙色 / [T2 0.42] ← 低分灰色
+    显示用百分制（评分公式不变，仅 score × 100 取整）：
+      [T1 85]  ← 高分（≥70）红色 / [T1 62] ← 中等（≥50）橙色 / [T2 42] ← 低分灰色
 
     没有 final_score 字段 → 返回空串（向后兼容，旧调用不受影响）
     """
@@ -30,7 +63,7 @@ def _build_score_badge(platform: str, title_data: Dict) -> str:
         return ""
 
     tier = str(title_data.get("tier") or "").strip()
-    label = f"{tier} {score:.2f}" if tier else f"{score:.2f}"
+    label = format_score_label(score, tier)
 
     if platform == "feishu":
         if score >= 0.7:
@@ -42,8 +75,7 @@ def _build_score_badge(platform: str, title_data: Dict) -> str:
         return f" <font color='{color}'>📊 {label}</font>"
 
     if platform == "html":
-        css_class = "score-high" if score >= 0.7 else "score-mid" if score >= 0.5 else "score-low"
-        return f" <span class='score-badge {css_class}'>📊 {label}</span>"
+        return f" <span class='score-badge {score_color_class(score)}'>📊 {label}</span>"
 
     if platform == "telegram":
         return f" <code>📊 {label}</code>"
