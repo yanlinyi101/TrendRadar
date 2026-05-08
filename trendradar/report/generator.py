@@ -101,6 +101,14 @@ def prepare_report_data(
                     )
 
     processed_stats = []
+    # Phase 1-4 元数据字段：title_data 里如果有就透传，避免被这层重构剥掉
+    # 否则 HTML featured 区 + score badge + tier 排序全失效
+    PASSTHROUGH_KEYS = (
+        "tier", "relevance_score", "freshness_decay", "final_score",
+        "first_time", "last_time", "source_id", "source_type",
+        "matched_keyword", "cluster_count", "cluster_titles",
+        "dim_scores",
+    )
     for stat in stats:
         if stat["count"] <= 0:
             continue
@@ -115,9 +123,13 @@ def prepare_report_data(
                 "ranks": title_data["ranks"],
                 "rank_threshold": title_data["rank_threshold"],
                 "url": title_data.get("url", ""),
-                "mobile_url": title_data.get("mobileUrl", ""),
+                "mobile_url": title_data.get("mobileUrl") or title_data.get("mobile_url", ""),
                 "is_new": title_data.get("is_new", False),
             }
+            # 透传 Phase 1-4 元数据
+            for k in PASSTHROUGH_KEYS:
+                if k in title_data:
+                    processed_title[k] = title_data[k]
             processed_titles.append(processed_title)
 
         processed_stats.append(
