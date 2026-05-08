@@ -36,6 +36,7 @@ class DataFetcher:
         self,
         proxy_url: Optional[str] = None,
         api_url: Optional[str] = None,
+        request_timeout: int = 20,
     ):
         """
         初始化数据获取器
@@ -43,9 +44,12 @@ class DataFetcher:
         Args:
             proxy_url: 代理服务器 URL（可选）
             api_url: API 基础 URL（可选，默认使用 DEFAULT_API_URL）
+            request_timeout: 单次请求超时秒数（默认 20s）。贴吧/微博/抖音等
+                高数据量榜单 newsnow 上游响应偏慢，<10s 容易压线超时
         """
         self.proxy_url = proxy_url
         self.api_url = api_url or self.DEFAULT_API_URL
+        self.request_timeout = request_timeout
 
     def fetch_data(
         self,
@@ -85,7 +89,7 @@ class DataFetcher:
                     url,
                     proxies=proxies,
                     headers=self.DEFAULT_HEADERS,
-                    timeout=10,
+                    timeout=self.request_timeout,
                 )
                 response.raise_for_status()
 
